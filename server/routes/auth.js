@@ -1,13 +1,3 @@
-class User {
-  constructor(username, birthdate, age, email, password) {
-    this.username = username;
-    this.birthdate = birthdate;
-    this.age = age;
-    this.email = email;
-    this.password = password;
-  }
-}
-
 module.exports = function (app, userList) {
   app.post('/api/auth', (req, res) => {
     if (!req.body) {
@@ -18,6 +8,10 @@ module.exports = function (app, userList) {
 
         userList.filter(function (user) {
           if (user.email == email && user.password == password) {
+              if(user.email == 'super@test.com')
+              {
+                return res.send(userList);
+              }
             var userRes = {
               username: user.username,
               email: user.email,
