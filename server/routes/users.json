@@ -1,1 +1,10 @@
-[{"username":"super","email":"super@test.com","password":"test"},{"username":"jeff","email":"jeff@test.com","password":"test"},{"username":"sam","email":"sam@test.com","password":"test"},{"username":"dan","email":"dan@test.com","password":"test"},{"username":"superpush","birthdate":"Aug-13","age":"23","email":"superpush@test.com","password":"password"}]
+{ 
+"users": [
+	{"username":"super","email":"super@test.com","password":"test"},
+	{"username":"jeff","email":"jeff@test.com","password":"test"},
+	{"username":"sam","email":"sam@test.com","password":"test"},
+	{"username":"dan","email":"dan@test.com","password":"test"},
+	{"username":"superpush","birthdate":"Aug-13","age":"23","email":"superpush@test.com","password":"password"},
+	{"username":"superpush","birthdate":"Aug-13","age":"23","email":"superpush@test.com","password":"password"},
+	{"username":"superpush","birthdate":"Aug-13","age":"23","email":"superpush@test.com","password":"password"}
+] }

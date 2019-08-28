@@ -9,16 +9,22 @@ module.exports = function (app, userList) {
         username: req.body.username, 
         birthdate: req.body.birthdate, 
         age: req.body.age, 
-        email: req.body.email, 
+        email: req.body.email,
         password: req.body.password
     };
 
     userList.push(user);
     console.log(userList);
-    try{
-        fs.writeFileSync('./routes/users.json', JSON.stringify(userList), 'utf8');
+    try {
+        fs.writeFileSync('./routes/users.json', '{ \n"users": [\n', 'utf8');
+        for(i = 0; i < userList.length-1; i++)
+        {
+            fs.appendFileSync('./routes/users.json', "\t" + JSON.stringify(userList[i]) + ",\n", 'utf8');
+        }
+        fs.appendFileSync('./routes/users.json', "\t" + JSON.stringify(userList[userList.length - 1]) + "\n", 'utf8');
+        fs.appendFileSync('./routes/users.json', '] }', 'utf8');
     }
-    catch{
+    catch {
         res.send("Error saving user");
     }
     return res.send("User Added Successfully");
