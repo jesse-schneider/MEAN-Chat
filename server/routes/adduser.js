@@ -5,16 +5,19 @@ module.exports = function (app, userList) {
     if (!req.body) {
       return res.sendStatus(400);
     }
+
     var user = {
         username: req.body.username, 
         birthdate: req.body.birthdate, 
         age: req.body.age, 
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        ofGroupAdminRole: JSON.parse(req.body.groupAdmin)
     };
+    console.log(user);
 
     userList.push(user);
-    console.log(userList);
+    //console.log(userList);
     try {
         fs.writeFileSync('./routes/users.json', '{ \n"users": [\n', 'utf8');
         for(i = 0; i < userList.length-1; i++)
@@ -27,6 +30,6 @@ module.exports = function (app, userList) {
     catch {
         res.send("Error saving user");
     }
-    return res.send("User Added Successfully");
+    return res.send(user);
   });
 };

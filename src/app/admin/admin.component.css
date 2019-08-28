@@ -1,0 +1,36 @@
+#adminpage {
+  width: 20em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+}
+
+form input,
+form label {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.lbl {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+form input {
+  margin-block: 1em;
+  padding: 0.5em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20em;
+}
+
+#submitbutton {
+  display: block;
+  text-align: center;
+  margin: 10% auto;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.invisible {
+  visibility: hidden;
+}

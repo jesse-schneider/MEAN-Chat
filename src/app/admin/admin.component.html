@@ -1,0 +1,20 @@
+<h1 style="text-align: center">Admin Center</h1>
+<div id="adminpage">
+  <div id="details">
+    <button (click)="show = !show" id="submitbutton" class="btn btn-primary btn-lg">Create New User</button>
+  </div>
+  <form *ngIf="show; else profiledetails" id="profileform">
+    <label for="username" class="lbl">Username</label>
+    <input type="username" [(ngModel)]="username" name="username" id="username" />
+    <label for="birthdate" class="lbl">Birthdate</label>
+    <input type="birthdate" [(ngModel)]="birthdate" name="birthdate" id="birthdate" />
+    <label for="age" class="lbl">Age</label>
+    <input type="age" [(ngModel)]="age" name="age" id="age" />
+    <label for="email" class="lbl">Email</label>
+    <input type="email" [(ngModel)]="email" name="email" id="email" />
+    <label for="password" class="lbl">Password</label>
+    <input type="password" [(ngModel)]="password" name="password" id="password" />
+    <label for="groupAdmin" class="lbl">User is a Group Admin?</label>
+    <input type="checkbox" [(ngModel)]="groupAdmin" name="groupAdmin" id="groupAdmin" />
+    <button (click)="createUser();show = !show" id="submitbutton" class="btn btn-dark btn-lg">Save</button>
+  </form>

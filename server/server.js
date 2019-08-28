@@ -11,8 +11,6 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 
 var userList = JSON.parse(fs.readFileSync('./routes/users.json', 'utf8'))['users'];
-console.log(userList);
-console.log(userList.length);
 
 require('./routes/auth.js')(app, userList);
 require('./routes/adduser.js')(app, userList);
