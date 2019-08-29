@@ -14,10 +14,15 @@ export class AdminComponent implements OnInit {
   email = "";
   password = "";
   groupAdmin = false;
+  userList= [];
+  create = false;
+  detailsVisible = false;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    let storageJson = sessionStorage.getItem('Authenticated_user');
+    this.userList = JSON.parse(storageJson);
   }
 
   createUser() {
@@ -31,13 +36,33 @@ export class AdminComponent implements OnInit {
     }
 
     let data = JSON.stringify(user);
-    console.log(data);
 
     this.authService.createUser(data).subscribe((response) => {
       console.log('response: ', response);
+      this.userList.push(response);
+      sessionStorage.setItem('Authenticated_user', JSON.stringify(this.userList));
+      this.resetFields();
+      this.swapView();
     }, (error) => {
       console.log("error during user creation: ", error);
     });
+  }
+
+  resetFields(){
+    this.username = "";
+    this.birthdate = "";
+    this.age = "";
+    this.email = "";
+    this.password = "";
+    this.groupAdmin = false;
+  }
+
+  swapView(){
+    this.create = !this.create;
+  }
+
+  userDetailsVisible() {
+    this.detailsVisible = !this.detailsVisible;
   }
 
   

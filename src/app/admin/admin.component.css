@@ -1,3 +1,10 @@
+#container {
+  min-height: 83vh;
+}
+p {
+  font-size: 16px;
+}
+
 #adminpage {
   width: 20em;
   margin-left: auto;
@@ -5,8 +12,11 @@
   margin-top: 2%;
 }
 
-form input,
-form label {
+#adminheading {
+  margin-top: -50px;
+}
+
+form input, form label {
   display: block;
   font-family: 'Montserrat', sans-serif;
 }
@@ -14,6 +24,7 @@ form label {
 .lbl {
   margin-left: auto;
   margin-right: auto;
+  display: inline-block;
 }
 
 form input {
@@ -33,4 +44,27 @@ form input {
 
 .invisible {
   visibility: hidden;
+}
+
+li {
+  list-style: none;
+  cursor: pointer;
+
+ 
+  
+}
+ul {
+  padding: 0;
+}
+ .userlist, #createuser {
+  width: 320px;
+  min-height: 70vh;
+  margin-left: -40%;
+
+  display: block;
+}
+
+#groupAdmin {
+  width: 320px;
+
 }

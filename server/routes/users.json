@@ -2,10 +2,5 @@
 "users": [
 	{"username":"super","email":"super@test.com","password":"test","ofGroupAdminRole":true},
 	{"username":"superpush","birthdate":"Aug-13","age":"23","email":"superpush@test.com","password":"password","ofGroupAdminRole":false},
-	{"username":"sdffdg","birthdate":"sdfsdfg","age":"sdfdsfg","email":"sdfdsfg","password":"sdfdsfg","ofGroupAdminRole":false},
-	{"username":"sdffdg","birthdate":"sdfsdfg","age":"sdfdsfg","email":"sdfdsfg","password":"sdfdsfg","ofGroupAdminRole":false},
-	{"username":"sdffdg","birthdate":"sdfsdfg","age":"sdfdsfg","email":"sdfdsfg","password":"sdfdsfg","ofGroupAdminRole":false},
-	{"username":"sdffdg","birthdate":"sdfsdfg","age":"sdfdsfg","email":"sdfdsfg","password":"sdfdsfg","ofGroupAdminRole":false},
-	{"username":"","birthdate":"","age":"","email":"","password":"","ofGroupAdminRole":false},
-	{"username":"sf","birthdate":"zxdv","age":"sdf","email":"sdf","password":"sdfsf","ofGroupAdminRole":false}
+	{"username":"retard","birthdate":"ert","age":"ewrt","email":"ewrt","password":"ert","ofGroupAdminRole":false}
 ] }

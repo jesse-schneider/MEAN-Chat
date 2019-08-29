@@ -16,6 +16,10 @@ export class NavComponent implements OnInit {
     this.collapsed = !this.collapsed;
   }
 
+  logout() {
+    sessionStorage.clear();
+  }
+
   ngOnInit() {
   }
 
