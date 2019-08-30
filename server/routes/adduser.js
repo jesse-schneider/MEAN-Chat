@@ -12,12 +12,12 @@ module.exports = function (app, userList) {
         age: req.body.age, 
         email: req.body.email,
         password: req.body.password,
-        ofGroupAdminRole: JSON.parse(req.body.groupAdmin)
+        ofGroupAdminRole: JSON.parse(req.body.groupAdmin),
+        groupList: req.body.groupList,
+        adminGroupList: req.body.adminGroupList
     };
     console.log(user);
-
     userList.push(user);
-    //console.log(userList);
     try {
         fs.writeFileSync('./routes/users.json', '{ \n"users": [\n', 'utf8');
         for(i = 0; i < userList.length-1; i++)
