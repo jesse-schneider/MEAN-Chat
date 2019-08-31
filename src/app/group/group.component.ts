@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../services/auth.service';
+import { GroupService } from './../services/group.service';
 
 @Component({
   selector: 'app-group',
@@ -15,12 +16,18 @@ export class GroupComponent implements OnInit {
   createChannel = false;
   admin = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private groupService: GroupService) { }
 
   ngOnInit() {
     if (this.user.ofGroupAdminRole == true) {
       this.admin = !this.admin;
     }
+    let data = JSON.stringify({ group: this.group});
+
+    this.groupService.getChannels(data).subscribe((response) => {
+      this.channelList = [];
+      this.channelList = response.channels;
+    });
   }
 
   showCreateChannel() {
@@ -35,8 +42,6 @@ export class GroupComponent implements OnInit {
       channels: this.channelList
     };
 
-    console.log(groupObj);
-
     let data = JSON.stringify(groupObj);
 
     this.authService.createChannel(data).subscribe((response) => {
@@ -45,7 +50,5 @@ export class GroupComponent implements OnInit {
     }, (error) => {
       console.log('error: ', error);
     });
-
   }
-
 }

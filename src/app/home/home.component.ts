@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
 
   selectGroup(group) {
     sessionStorage.setItem('Group', group);
+
   }
 
   create(){

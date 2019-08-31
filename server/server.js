@@ -17,6 +17,7 @@ require('./routes/auth.js')(app, userList);
 require('./routes/adduser.js')(app, userList);
 require('./routes/addgroup.js')(app, userList, groups);
 require('./routes/addchannel.js')(app, groups);
+require('./routes/channels.js')(app, groups);
 
 app.listen(3000, () => {
   console.log("node server is listening on port 3000");
