@@ -25,8 +25,6 @@ module.exports = function (app, groups) {
         fs.appendFileSync('./routes/channels.json', "\t" + JSON.stringify(groups[groups.length - 1]) + "\n", 'utf8');
         fs.appendFileSync('./routes/channels.json', '] }', 'utf8');
       
-        return res.send({
-        response: 'channel saved'
-        });
+        return res.send({postedGroup});
   });
 };
