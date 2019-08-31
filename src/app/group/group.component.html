@@ -1,15 +1,29 @@
 <h5 class="welcome">User: {{ user.username }}</h5>
 <h5 class="welcome">Group: {{ group }}</h5>
 <a href="home"><i class="fas fa-arrow-left backarrow">Back to Groups</i></a>
-<button *ngIf="admin" (click)="showCreateChannel()" class="btn btn-primary" id="submitbutton">Create new Channel</button>
+<button (click)="showCreateChannel()" class="btn btn-primary" id="submitbutton">Create new
+  Channel</button>
+<button (click)="showCreateUser()" class="btn btn-primary userbtn" id="addUserButton">Add User +</button>
 <div class="newChannelForm">
   <form *ngIf="createChannel" id="createChannel">
     <label for="newChannel" class="lbl">New Channel Name: </label>
     <input type="newChannel" [(ngModel)]="newChannel" name="newChannel" id="newChannel" autofocus />
-    <button type="button" (click)="create();showCreateChannel()" id="submitbutton"
+    <button type="button" (click)="create();showCreateChannel()" id="savebutton"
       class="btn btn-dark btn-lg">Save</button>
   </form>
-</div>
+  </div>
+  <div id="createUser">
+  <form *ngIf="createUser" id="createUser">
+    <label for="username" class="lbl">Username: </label>
+    <input type="username" [(ngModel)]="username" name="username" id="username" />
+    <label for="email" class="lbl">Email: </label>
+    <input type="email" [(ngModel)]="email" name="email" id="email" />
+    <label for="groupAdmin" class="lbl" id="groupAdmin">Group Admin?<input type="checkbox" [(ngModel)]="groupAdmin"
+        name="groupAdmin" id="check" /></label>
+    <button (click)="addUser();show = !show" id="savebutton" class="btn btn-dark btn-lg">Save</button>
+  </form>
+  </div>
+
 <div class="container-fluid">
   <div class="row">
     <nav class="col-md-2 d-none d-md-block bg-light sidebar">

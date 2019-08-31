@@ -13,7 +13,12 @@ module.exports = function (app, userList) {
         groupList: req.body.groupList,
         adminGroupList: req.body.adminGroupList
     };
-    console.log(user);
+
+    for(i = 0; i < userList.length; i++) {
+      if(userList[i].username == user.username) {
+        return res.send({ Error: "user already exists."});
+      }
+    }
     userList.push(user);
     try {
         fs.writeFileSync('./routes/users.json', '{ \n"users": [\n', 'utf8');

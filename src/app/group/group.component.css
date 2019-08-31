@@ -9,7 +9,7 @@ form label {
   text-align: center;
 }
 
-.newChannelForm {
+.newChannelForm, #createUser {
   text-align: center;
 }
 
@@ -24,14 +24,28 @@ form input {
 }
 
 #submitbutton {
-  display: block;
+  display: inline-block;
   text-align: center;
-  margin: auto;
-  margin-top: 20px;
+  margin: 0 10px 20px 650px;
   font-family: 'Montserrat', sans-serif;
 }
 
-#createChannel {
+#savebutton {
+  display: block;
+  text-align: center;
+  margin: 1% auto;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#addUserButton {
+    display: inline-block;
+    text-align: center;
+    margin: 0 100px 20px 10px;
+    font-family: 'Montserrat',
+    sans-serif;
+}
+
+#createChannel, #createUser {
   margin-top: 50px;
 }
 
@@ -49,4 +63,10 @@ form input {
 
 .channeli {
   padding-right: 10px;
+}
+
+#createUser {
+    margin-left: auto;
+    margin-right: auto;
+    width: 20em;
 }

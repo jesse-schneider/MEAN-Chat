@@ -1,5 +1,5 @@
 { 
 "groups": [
-	{"group":"punks","channels":[]},
+	{"group":"punks","channels":["testing punks","test2"]},
 	{"group":"testing","channels":["newchan"]}
 ] }

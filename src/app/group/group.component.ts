@@ -14,6 +14,7 @@ export class GroupComponent implements OnInit {
   channelList = [];
   newChannel = "";
   createChannel = false;
+  createUser = false;
   admin = false;
 
   constructor(private authService: AuthService, private groupService: GroupService) { }
@@ -24,14 +25,29 @@ export class GroupComponent implements OnInit {
     }
     let data = JSON.stringify({ group: this.group});
 
-    this.groupService.getChannels(data).subscribe((response) => {
+    this.groupService.getChannels(data).subscribe((res) => {
       this.channelList = [];
-      this.channelList = response.channels;
+      console.log(res);
+      this.channelList = res.channels;
     });
   }
 
   showCreateChannel() {
     this.createChannel = !this.createChannel;
+    if(this.createUser == true) {
+      this.createUser = false;
+    }
+  }
+
+  showCreateUser() {
+    this.createUser = !this.createUser;
+    if (this.createChannel == true) {
+      this.createChannel = false;
+    }
+  }
+
+  addUser() {
+
   }
 
   create() {

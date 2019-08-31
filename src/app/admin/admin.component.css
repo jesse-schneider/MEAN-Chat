@@ -63,22 +63,19 @@ form input {
 li {
   list-style: none;
   cursor: pointer;
-
- 
-  
 }
+
 ul {
   padding: 0;
 }
+
  .userlist, #createuser {
   width: 320px;
   min-height: 70vh;
   margin-left: -40%;
-
   display: block;
 }
 
 #groupAdmin {
   width: 320px;
-
 }
