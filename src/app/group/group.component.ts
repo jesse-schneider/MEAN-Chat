@@ -15,17 +15,24 @@ export class GroupComponent implements OnInit {
   userList = [];
   newChannel = "";
   channelToRemove = "";
+  userToRemove = "";
   createChannel = false;
   removeChannel = false;
+  removeUser = false;
   createUser = false;
   admin = false;
+  sadmin = false;
+  assis = false;
+  activeCss = [];
+  currentCss = "";
   
 
   uusername = "";
   uemail = "";
   ugroupAdmin = false;
+  ugroupAssis = false;
   ugroupList = [];
-  ugroupListChannels = {};
+  ugroupChannels = {};
   uadminGroupList = [];
 
   constructor(private authService: AuthService, private groupService: GroupService) { }
@@ -37,12 +44,19 @@ export class GroupComponent implements OnInit {
     if (this.user.ofGroupAdminRole == true) {
       this.admin = !this.admin;
     }
+    if(this.user.username== 'super') {
+      this.sadmin = !this.sadmin;
+      this.assis = !this.assis;
+    }
+
+    if(this.user.ofGroupAsissRole == true) {
+      this.assis = !this.assis;
+    }
+
     let data = JSON.stringify({ group: this.group});
 
-    this.groupService.getChannels(data).subscribe((res) => {
-      this.channelList = [];
-      this.channelList = res.channels;
-    });
+    this.channelList = this.user.groupChannels;
+    this.activeCss = this.channelList;
   }
 
   showCreateChannel() {
@@ -51,6 +65,8 @@ export class GroupComponent implements OnInit {
       this.createUser = false;
     } else if (this.removeChannel == true) {
       this.removeChannel = false;
+    } else if (this.removeUser == true) {
+      this.removeUser = false;
     }
   }
 
@@ -60,6 +76,8 @@ export class GroupComponent implements OnInit {
       this.createUser = false;
     } else if (this.createChannel == true) {
       this.createChannel = false;
+    } else if (this.removeUser == true) {
+      this.removeUser = false;
     }
   }
 
@@ -69,17 +87,31 @@ export class GroupComponent implements OnInit {
       this.createChannel = false;
     } else if (this.removeChannel == true) {
       this.removeChannel = false;
+    } else if (this.removeUser == true) {
+      this.removeUser = false;
     }
   }
 
-  addUser() {
+  showRemoveUser() {
+    this.removeUser = !this.removeUser;
+    if (this.createUser == true) {
+      this.createUser = false;
+    } else if (this.removeChannel == true) {
+      this.removeChannel = false;
+    } else if(this.createChannel == true) {
+      this.createChannel = false;
+    }
+  }
+
+  addU() {
     let user = {
       username: this.uusername,
       email: this.uemail,
       groupAdmin: this.ugroupAdmin,
+      groupAssis: this.ugroupAssis,
       groupList: this.ugroupList,
       adminGroupList: this.uadminGroupList,
-      groupListChannels: this.ugroupListChannels
+      groupChannels: this.ugroupChannels
     }
     user.groupList.push(this.group);
 
@@ -94,7 +126,13 @@ export class GroupComponent implements OnInit {
     }, (error) => {
       console.log("error during user creation: ", error);
     });
+  }
 
+  removeU() {
+    console.log(this.userToRemove);
+    this.authService.removeUser(JSON.parse("{\"remove\": \"" + this.userToRemove + "\", \"user\": \"" + this.user.username + "\" }")).subscribe((response) => {
+      console.log(response);
+    });
   }
 
   resetFields() {
@@ -103,28 +141,55 @@ export class GroupComponent implements OnInit {
     this.ugroupAdmin = false;
   }
 
+  activateLiCss(i) {
+    // let count = 0;
+    // let nextAct;
+    // let prevAct;
+
+    // for(let channel of this.activeCss) {
+      
+    //   if (channel === 'active') {
+    //     prevAct = count;
+    //   }
+    //   if (channel === i) {
+    //     nextAct = count;
+    //     this.currentCss = channel;
+    //   }
+    //   count++;
+    // }
+    // this.activeCss[nextAct] = "active";
+    // console.log(this.activeCss);
+  }
+
   createC() {
-    this.channelList.push(this.newChannel);
-    this.newChannel = "";
     let groupObj = {
       group: this.group,
-      channels: this.channelList
+      channel: this.newChannel,
+      user: this.user.username
     };
+    this.newChannel = "";
 
     let data = JSON.stringify(groupObj);
 
     this.authService.createChannel(data).subscribe((response) => {
       console.log('response: ', response);
-
+      sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
+      this.user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
+      this.channelList = this.user.groupChannels;
     }, (error) => {
       console.log('error: ', error);
     });
   }
   
   removeC() {
-    console.log(this.channelToRemove);
-    this.channelList.filter((channel) => channel != this.channelToRemove);
-    console.log(this.channelList);
+    this.groupService.removeChannel(JSON.parse("{\"channel\": \"" + this.channelToRemove + "\", \"user\": \"" + this.user.username + "\" }")).subscribe((response) => {
+      console.log('response: ', response);
+      sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
+      this.user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
+      this.channelList = this.user.groupChannels;
+    }, (error) => {
+      console.log('error: ', error);
+    });
   }
     
-  }
+}

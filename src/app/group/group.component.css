@@ -9,9 +9,7 @@ form label {
   text-align: center;
 }
 
-.newChannelForm,
-#createUser,
-.removeChannelForm {
+.newChannelForm, #createUser, .removeChannelForm, .removeUserForm {
   text-align: center;
 }
 

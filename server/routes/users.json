@@ -1,7 +1,4 @@
 { 
 "users": [
-	{"username":"super","email":"super@test.com","ofGroupAdminRole":true,"groupList":["punks"],"adminGroupList":["punks"],"groupChannels":["punks-new","punks-tester","punks-pew","punks-tester"],"channels":["punks-new","punks-tester","punks-pew","punks-tester"]},
-	{"username":"jesse","email":"jesse@test.com","ofGroupAdminRole":false,"ofGroupAssisRole":false,"groupList":["punks"],"adminGroupList":[],"groupChannels":[],"channels":[]},
-	{"username":"test1","email":"test","ofGroupAdminRole":false,"ofGroupAssisRole":false,"groupList":["punks"],"adminGroupList":[],"groupChannels":{},"channels":{}},
-	{"username":"","email":"","ofGroupAdminRole":false,"ofGroupAssisRole":false,"groupList":["punks"],"adminGroupList":[],"groupChannels":{},"channels":{}}
+	{"username":"super","email":"super@test.com","ofGroupAdminRole":true,"groupList":["punks"],"adminGroupList":["punks"],"groupChannels":["punks-new","punks-tester","punks-pew","punks-tester"],"channels":["punks-new","punks-tester","punks-pew","punks-tester"]}
 ] }
