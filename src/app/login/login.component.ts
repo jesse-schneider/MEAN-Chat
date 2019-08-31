@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
 
   login(){
     let user = {
-      username: this.username,
-  
+      username: this.username
     }
+
     let data = JSON.stringify(user);
 
     this.authService.login(data).subscribe((response) => {

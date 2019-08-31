@@ -9,7 +9,9 @@ form label {
   text-align: center;
 }
 
-.newChannelForm, #createUser {
+.newChannelForm,
+#createUser,
+.removeChannelForm {
   text-align: center;
 }
 
@@ -26,7 +28,7 @@ form input {
 #submitbutton {
   display: inline-block;
   text-align: center;
-  margin: 0 10px 20px 650px;
+  margin: 0 10px 20px 450px;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -37,7 +39,15 @@ form input {
   font-family: 'Montserrat', sans-serif;
 }
 
-#addUserButton {
+#middleButton {
+    display: inline-block;
+    text-align: center;
+    margin: 0 10px 20px 10px;
+    font-family: 'Montserrat',
+    sans-serif;
+}
+
+#endButton {
     display: inline-block;
     text-align: center;
     margin: 0 100px 20px 10px;

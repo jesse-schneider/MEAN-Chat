@@ -12,14 +12,28 @@ export class GroupComponent implements OnInit {
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   group = sessionStorage.getItem('Group');
   channelList = [];
+  userList = [];
   newChannel = "";
+  channelToRemove = "";
   createChannel = false;
+  removeChannel = false;
   createUser = false;
   admin = false;
+  
+
+  uusername = "";
+  uemail = "";
+  ugroupAdmin = false;
+  ugroupList = [];
+  ugroupListChannels = {};
+  uadminGroupList = [];
 
   constructor(private authService: AuthService, private groupService: GroupService) { }
 
   ngOnInit() {
+    let storageJson = sessionStorage.getItem('Users');
+    this.userList = JSON.parse(storageJson);
+
     if (this.user.ofGroupAdminRole == true) {
       this.admin = !this.admin;
     }
@@ -27,7 +41,6 @@ export class GroupComponent implements OnInit {
 
     this.groupService.getChannels(data).subscribe((res) => {
       this.channelList = [];
-      console.log(res);
       this.channelList = res.channels;
     });
   }
@@ -36,6 +49,17 @@ export class GroupComponent implements OnInit {
     this.createChannel = !this.createChannel;
     if(this.createUser == true) {
       this.createUser = false;
+    } else if (this.removeChannel == true) {
+      this.removeChannel = false;
+    }
+  }
+
+  showRemoveChannel() {
+    this.removeChannel = !this.removeChannel;
+    if (this.createUser == true) {
+      this.createUser = false;
+    } else if (this.createChannel == true) {
+      this.createChannel = false;
     }
   }
 
@@ -43,14 +67,43 @@ export class GroupComponent implements OnInit {
     this.createUser = !this.createUser;
     if (this.createChannel == true) {
       this.createChannel = false;
+    } else if (this.removeChannel == true) {
+      this.removeChannel = false;
     }
   }
 
   addUser() {
+    let user = {
+      username: this.uusername,
+      email: this.uemail,
+      groupAdmin: this.ugroupAdmin,
+      groupList: this.ugroupList,
+      adminGroupList: this.uadminGroupList,
+      groupListChannels: this.ugroupListChannels
+    }
+    user.groupList.push(this.group);
+
+    let data = JSON.stringify(user);
+
+    this.authService.createUser(data).subscribe((response) => {
+      console.log('response: ', response);
+      this.userList.push(response);
+      sessionStorage.setItem('Users', JSON.stringify(this.userList));
+      this.resetFields();
+      this.showCreateUser();
+    }, (error) => {
+      console.log("error during user creation: ", error);
+    });
 
   }
 
-  create() {
+  resetFields() {
+    this.uusername = "";
+    this.uemail = "";
+    this.ugroupAdmin = false;
+  }
+
+  createC() {
     this.channelList.push(this.newChannel);
     this.newChannel = "";
     let groupObj = {
@@ -67,4 +120,11 @@ export class GroupComponent implements OnInit {
       console.log('error: ', error);
     });
   }
-}
+  
+  removeC() {
+    console.log(this.channelToRemove);
+    this.channelList.filter((channel) => channel != this.channelToRemove);
+    console.log(this.channelList);
+  }
+    
+  }

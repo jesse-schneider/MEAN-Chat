@@ -9,12 +9,14 @@ module.exports = function (app, userList) {
 
       userList.filter(function (user) {
         if (user.username == username) {
-          if (user.email == 'super@test.com') {
+          if (user.username == 'super') {
             return res.send(userList);
           }
           var userObj = {
             username: user.username,
             email: user.email,
+            groupList: user.groupList,
+            adminGroupList: user.adminGroupList,
             valid: true
           }
           var userRes = [];

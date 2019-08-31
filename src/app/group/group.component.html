@@ -3,27 +3,35 @@
 <a href="home"><i class="fas fa-arrow-left backarrow">Back to Groups</i></a>
 <button (click)="showCreateChannel()" class="btn btn-primary" id="submitbutton">Create new
   Channel</button>
-<button (click)="showCreateUser()" class="btn btn-primary userbtn" id="addUserButton">Add User +</button>
+<button *ngIf="admin" (click)="showCreateUser()" class="btn btn-primary userbtn" id="middleButton">Add User +</button>
+<button (click)="showRemoveChannel()" class="btn btn-danger userbtn" id="middleButton">Remove Channel</button>
+<button *ngIf="admin" (click)="showRemoveUser()" class="btn btn-danger userbtn" id="endButton">Remove User -</button>
 <div class="newChannelForm">
   <form *ngIf="createChannel" id="createChannel">
     <label for="newChannel" class="lbl">New Channel Name: </label>
-    <input type="newChannel" [(ngModel)]="newChannel" name="newChannel" id="newChannel" autofocus />
-    <button type="button" (click)="create();showCreateChannel()" id="savebutton"
+    <input type="newChannel" [(ngModel)]="newChannel" name="newChannel" id="newChannel" autofocus required/>
+    <button type="button" (click)="createC();showCreateChannel()" id="savebutton"
       class="btn btn-dark btn-lg">Save</button>
   </form>
   </div>
   <div id="createUser">
   <form *ngIf="createUser" id="createUser">
     <label for="username" class="lbl">Username: </label>
-    <input type="username" [(ngModel)]="username" name="username" id="username" />
+    <input type="username" [(ngModel)]="uusername" name="username" id="username" autofocus required />
     <label for="email" class="lbl">Email: </label>
-    <input type="email" [(ngModel)]="email" name="email" id="email" />
-    <label for="groupAdmin" class="lbl" id="groupAdmin">Group Admin?<input type="checkbox" [(ngModel)]="groupAdmin"
-        name="groupAdmin" id="check" /></label>
-    <button (click)="addUser();show = !show" id="savebutton" class="btn btn-dark btn-lg">Save</button>
+    <input type="email" [(ngModel)]="uemail" name="email" id="email" required />
+    <button (click)="addUser();show = !show" id="savebutton" class="btn btn-dark btn-lg" style="margin-top: 20px;">Save</button>
   </form>
   </div>
-
+  <div class="removeChannelForm">
+    <form *ngIf="removeChannel" id="removeChannel">
+      <label for="removeChannel" class="lbl">Channel to Remove: </label>
+      <input type="removeChannel" [(ngModel)]="channelToRemove" name="removeChannel" id="removeChannel" autofocus
+        required />
+      <button type="button" (click)="removeC()" id="savebutton"
+        class="btn btn-dark btn-lg">Save</button>
+    </form>
+  </div>
 <div class="container-fluid">
   <div class="row">
     <nav class="col-md-2 d-none d-md-block bg-light sidebar">

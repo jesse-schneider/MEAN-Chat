@@ -44,3 +44,19 @@ form input {
  .icon {
    font-size: 25px;
 } 
+
+#startButton {
+  display: inline-block;
+  text-align: center;
+  margin: 0 10px 20px 650px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+#endButton {
+  display: inline-block;
+  text-align: center;
+  margin: 0 100px 20px 10px;
+  font-family: 'Montserrat',
+    sans-serif;
+}

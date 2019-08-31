@@ -1,5 +1,6 @@
 <h5 class="welcome">Welcome, {{ user.username }}</h5>
-<button *ngIf="admin" (click)="showCreateGroup()" class="btn btn-primary" id="submitbutton">Create new Group</button>
+<button *ngIf="admin" (click)="showCreateGroup()" class="btn btn-primary" id="startButton">Create new Group</button>
+<button *ngIf="admin" (click)="showRemoveGroup()" class="btn btn-danger" id="endButton">Remove Group</button>
 <div class="newGroupForm">
 <form *ngIf="createGroup" id="createGroup">
   <label for="newGroup" class="lbl">New Group Name: </label>

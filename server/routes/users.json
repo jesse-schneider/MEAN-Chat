@@ -3,5 +3,8 @@
 	{"username":"super","email":"super@test.com","ofGroupAdminRole":true,"groupList":["punks","testing"],"adminGroupList":["punks","testing"]},
 	{"username":"test","email":"test.com","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]},
 	{"username":"jesse","email":"jesse@test.com","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]},
-	{"username":"jesse2","email":"jesse2@test.com","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]}
+	{"username":"jesse2","email":"jesse2@test.com","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]},
+	{"username":"groupuser@test.com","email":"test","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]},
+	{"username":"","email":"","ofGroupAdminRole":false,"groupList":["punks"],"adminGroupList":[]},
+	{"username":"testing","email":"testing@test.com","ofGroupAdminRole":false,"groupList":["punks"],"adminGroupList":[]}
 ] }
