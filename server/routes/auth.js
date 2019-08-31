@@ -4,11 +4,11 @@ module.exports = function (app, userList) {
       return res.sendStatus(400);
     }
 
-    var email = req.body.email;
-    var password = req.body.password;
+    console.log(req.body);
+    var username = req.body.username;
 
       userList.filter(function (user) {
-        if (user.email == email && user.password == password) {
+        if (user.username == username) {
           if (user.email == 'super@test.com') {
             return res.send(userList);
           }

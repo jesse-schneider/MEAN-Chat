@@ -8,10 +8,7 @@ module.exports = function (app, userList) {
 
     var user = {
         username: req.body.username, 
-        birthdate: req.body.birthdate, 
-        age: req.body.age, 
         email: req.body.email,
-        password: req.body.password,
         ofGroupAdminRole: JSON.parse(req.body.groupAdmin),
         groupList: req.body.groupList,
         adminGroupList: req.body.adminGroupList

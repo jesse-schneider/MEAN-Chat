@@ -1,6 +1,6 @@
 { 
 "users": [
-	{"username":"super","email":"super@test.com","password":"test","ofGroupAdminRole":true,"groupList":["test","tester","testing","New Group 10","Fook off"],"adminGroupList":["test","tester","testing","New Group 10","Fook off"]},
-	{"username":"test","birthdate":"test","age":"test","email":"test@test.com","password":"test","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]},
-	{"username":"","birthdate":"","age":"","email":"","password":"","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]}
+	{"username":"super","email":"super@test.com","ofGroupAdminRole":true,"groupList":["punks","fun"],"adminGroupList":["punks","fun"]},
+	{"username":"test","email":"test.com","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]},
+	{"username":"jesse","email":"jesse@test.com","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]}
 ] }
