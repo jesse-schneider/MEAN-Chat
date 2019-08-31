@@ -1,15 +1,16 @@
 .welcome {
-    margin-left: 20%;
+  margin-left: 20%;
 }
 
-form input, form label {
+form input,
+form label {
   display: inline-block;
   font-family: 'Montserrat', sans-serif;
   text-align: center;
 }
 
-.newGroupForm {
-    text-align: center;
+.newChannelForm {
+  text-align: center;
 }
 
 .lbl {
@@ -30,8 +31,8 @@ form input {
   font-family: 'Montserrat', sans-serif;
 }
 
-#createGroup {
-    margin-top: 50px;
+#createChannel {
+  margin-top: 50px;
 }
 
 .grouplist {
@@ -41,6 +42,11 @@ form input {
   font-size: 20px;
 }
 
- .icon {
-   font-size: 25px;
-} 
+.backarrow {
+  margin-left: 2.5%;
+  font-size: 20px;
+}
+
+.channeli {
+  padding-right: 10px;
+}

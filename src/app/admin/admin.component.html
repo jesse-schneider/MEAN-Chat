@@ -15,26 +15,21 @@
 <div id="adminpage" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <div class="userlist" *ngIf="!create">
     <h5>Current Users</h5>
-    <p>Click a user for further options:</p>
+    <p>Edit Group Admins:</p>
     <ul *ngFor="let user of userList">
       <li (click)="userDetailsVisible()">{{ user.username }}</li>
-      <div *ngIf="detailsVisible">
-        <p>Group Admin: {{ user.ofGroupAdminRole }}</p>
-      </div>
+        <p class="smallP">Admin: <input type="checkbox" [(ngModel)]="user.groupAdmin" name="groupAdmin" id="checkGroup" /></p>
     </ul>
+    <button id="submitbutton" class="btn btn-dark btn-lg">Save</button>
   </div>
   <form *ngIf="create" id="createuser">
       <label for="username" class="lbl">Username</label>
       <input type="username" [(ngModel)]="username" name="username" id="username" />
-      <label for="birthdate" class="lbl">Birthdate</label>
-      <input type="birthdate" [(ngModel)]="birthdate" name="birthdate" id="birthdate" />
-      <label for="age" class="lbl">Age</label>
-      <input type="age" [(ngModel)]="age" name="age" id="age" />
       <label for="email" class="lbl">Email</label>
       <input type="email" [(ngModel)]="email" name="email" id="email" />
-      <label for="password" class="lbl">Password</label>
-      <input type="password" [(ngModel)]="password" name="password" id="password" />
-      <label for="groupAdmin" class="lbl" id = "groupAdmin">User is a Group Admin?<input type="checkbox" [(ngModel)]="groupAdmin" name="groupAdmin" id="groupAdmin" /></label>
+      <br>
+      <label for="groupAdmin" class="lbl" id="groupAdmin">Group Admin?<input type="checkbox" [(ngModel)]="groupAdmin"
+          name="groupAdmin" id="check" /></label>
       <button (click)="createUser();show = !show" id="submitbutton" class="btn btn-dark btn-lg">Save</button>
       </form>
     </div>

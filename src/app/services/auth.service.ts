@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable } from 'rxjs';
+import { EventEmitter } from '@angular/core';
 
 
 @Injectable({
@@ -17,6 +18,14 @@ export class AuthService {
 
   createUser(data) {
     return this.http.post('http://localhost:3000/api/adduser', data, httpOptions);
+  }
+
+  createGroup(data) {
+    return this.http.post('http://localhost:3000/api/addgroup', data, httpOptions);
+  }
+
+  createChannel(data) {
+    return this.http.post('http://localhost:3000/api/addchannel', data, httpOptions);
   }
 
 }

@@ -9,30 +9,27 @@ import { AuthService } from './../services/auth.service';
 export class AdminComponent implements OnInit {
 
   username = "";
-  birthdate = "";
-  age = "";
   email = "";
-  password = "";
   groupAdmin = false;
+  groupList = [];
+  adminGroupList = [];
   userList= [];
   create = false;
-  detailsVisible = false;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    let storageJson = sessionStorage.getItem('Authenticated_user');
+    let storageJson = sessionStorage.getItem('Users');
     this.userList = JSON.parse(storageJson);
   }
 
   createUser() {
     let user = {
       username: this.username,
-      birthdate: this.birthdate,
-      age: this.age,
       email: this.email,
-      password: this.password,
-      groupAdmin: this.groupAdmin
+      groupAdmin: this.groupAdmin,
+      groupList: this.groupList,
+      adminGroupList: this.adminGroupList
     }
 
     let data = JSON.stringify(user);
@@ -40,7 +37,7 @@ export class AdminComponent implements OnInit {
     this.authService.createUser(data).subscribe((response) => {
       console.log('response: ', response);
       this.userList.push(response);
-      sessionStorage.setItem('Authenticated_user', JSON.stringify(this.userList));
+      sessionStorage.setItem('Users', JSON.stringify(this.userList));
       this.resetFields();
       this.swapView();
     }, (error) => {
@@ -50,19 +47,12 @@ export class AdminComponent implements OnInit {
 
   resetFields(){
     this.username = "";
-    this.birthdate = "";
-    this.age = "";
     this.email = "";
-    this.password = "";
     this.groupAdmin = false;
   }
 
   swapView(){
     this.create = !this.create;
-  }
-
-  userDetailsVisible() {
-    this.detailsVisible = !this.detailsVisible;
   }
 
   

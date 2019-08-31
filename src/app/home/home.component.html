@@ -1,1 +1,18 @@
-<p>home works!</p>
+<h5 class="welcome">Welcome, {{ user.username }}</h5>
+<button *ngIf="admin" (click)="showCreateGroup()" class="btn btn-primary" id="submitbutton">Create new Group</button>
+<div class="newGroupForm">
+<form *ngIf="createGroup" id="createGroup">
+  <label for="newGroup" class="lbl">New Group Name: </label>
+  <input type="newGroup" [(ngModel)]="newGroup" name="newGroup" id="newGroup" autofocus/>
+  <button type="button" (click)="create();showCreateGroup()" id="submitbutton" class="btn btn-dark btn-lg">Save</button>
+</form>
+</div>
+
+<h3 class="welcome">Groups</h3>
+<ul *ngFor="let i of groupList" class="grouplist list-group-item list-group-item-info">
+  
+    <a href="group" (click)="selectGroup(i)">
+      <i class="fas fa-server icon">
+      <li>{{ i }}</li></i>
+    </a>
+</ul>

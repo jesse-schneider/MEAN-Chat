@@ -5,6 +5,20 @@ p {
   font-size: 16px;
 }
 
+.smallP {
+  font-size: 12px;
+  margin-left: 50px;
+}
+
+#checkGroup {
+  display: inline-block;
+  margin-left: 10%;
+}
+
+#check {
+  margin-top: -15px;
+}
+
 #adminpage {
   width: 20em;
   margin-left: auto;

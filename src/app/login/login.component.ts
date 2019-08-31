@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,8 +10,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  email = "";
-  password = "";
+  username = "";
 
   constructor(private router: Router, private authService: AuthService) { }
 
@@ -19,19 +19,24 @@ export class LoginComponent implements OnInit {
 
   login(){
     let user = {
-      email: this.email,
-      password: this.password
+      username: this.username,
+  
     }
     let data = JSON.stringify(user);
 
     this.authService.login(data).subscribe((response) => {
       console.log('response from the post is ', response);
-      let storageJson = JSON.stringify(response);
+      let storageJson = "";
+      storageJson = JSON.stringify(response[0]);
+      if(response[0].username == 'super')
+      {
+        let storageList = JSON.stringify(response);
+        sessionStorage.setItem("Users", storageList);
+      }
       sessionStorage.setItem("Authenticated_user", storageJson);
       this.router.navigateByUrl('home');
     }, (error) => {
       console.log('error during post was', error);
     });
   }
-
 }

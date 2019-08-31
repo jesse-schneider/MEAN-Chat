@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -8,13 +9,18 @@ import { Component, OnInit } from '@angular/core';
 export class NavComponent implements OnInit {
 
   collapsed = true;
+  admin = false;
+  loggedin = false;
+  user = { username: "" };
 
-  constructor() { }
+  constructor(private authService: AuthService) {
+  }
 
   toggleCollapsed()
   {
     this.collapsed = !this.collapsed;
   }
+
 
   logout() {
     sessionStorage.clear();

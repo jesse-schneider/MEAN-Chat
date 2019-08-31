@@ -1,0 +1,26 @@
+<h5 class="welcome">User: {{ user.username }}</h5>
+<h5 class="welcome">Group: {{ group }}</h5>
+<a href="home"><i class="fas fa-arrow-left backarrow">Back to Groups</i></a>
+<button *ngIf="admin" (click)="showCreateChannel()" class="btn btn-primary" id="submitbutton">Create new Channel</button>
+<div class="newChannelForm">
+  <form *ngIf="createChannel" id="createChannel">
+    <label for="newChannel" class="lbl">New Channel Name: </label>
+    <input type="newChannel" [(ngModel)]="newChannel" name="newChannel" id="newChannel" autofocus />
+    <button type="button" (click)="create();showCreateChannel()" id="submitbutton"
+      class="btn btn-dark btn-lg">Save</button>
+  </form>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+          <h3 class="welcome">Channels</h3>
+          <ul *ngFor="let channel of channelList" class="nav flex-column list-group">
+            <li class="nav-item list-group-item"><i class="fas fa-user-friends channeli"></i>{{ channel }}</li>
+          </ul>
+      </div>
+    </nav>
+    <main role="main" class="col-lg-10">
+      <div id="adminpage" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"></div>
+    </main>
+  </div>

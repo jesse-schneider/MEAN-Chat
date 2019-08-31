@@ -1,10 +1,7 @@
 <h2 style="text-align: center">Login to MEANchat!</h2>
 <div id="loginpage">
   <form id="loginform">
-    <label for="email" class="lbl">Username</label>
-    <input type="email" [(ngModel)]="email" name="email" id="email" />
-    <label for="pwd" class="lbl">Password</label>
-    <input type="password" [(ngModel)]="password" name="pwd" id="pwd" />
+    <label for="username" class="lbl">Username</label>
+    <input type="username" [(ngModel)]="username" name="username" id="username" />
     <button (click)="login()" id="submitbutton" class="btn btn-dark btn-lg">Login</button>
   </form>
-  <p>Currently click home in the nav bar to access, no user authentication</p>
