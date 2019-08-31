@@ -10,8 +10,10 @@ module.exports = function (app, userList) {
         username: req.body.username, 
         email: req.body.email,
         ofGroupAdminRole: JSON.parse(req.body.groupAdmin),
+        ofGroupAssisRole: JSON.parse(req.body.groupAssis),
         groupList: req.body.groupList,
-        adminGroupList: req.body.adminGroupList
+        adminGroupList: req.body.adminGroupList,
+        groupChannels: req.body.groupChannels
     };
 
     for(i = 0; i < userList.length; i++) {

@@ -16,8 +16,9 @@ var userList = JSON.parse(fs.readFileSync('./routes/users.json', 'utf8'))['users
 require('./routes/auth.js')(app, userList);
 require('./routes/adduser.js')(app, userList);
 require('./routes/addgroup.js')(app, userList, groups);
-require('./routes/addchannel.js')(app, groups);
+require('./routes/addchannel.js')(app, groups, userList);
 require('./routes/channels.js')(app, groups);
+require('./routes/removechannel.js')(app, userList, groups);
 
 app.listen(3000, () => {
   console.log("node server is listening on port 3000");

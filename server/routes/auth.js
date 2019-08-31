@@ -9,6 +9,7 @@ module.exports = function (app, userList) {
 
       userList.filter(function (user) {
         if (user.username == username) {
+          console.log(user);
           if (user.username == 'super') {
             return res.send(userList);
           }
@@ -17,6 +18,7 @@ module.exports = function (app, userList) {
             email: user.email,
             groupList: user.groupList,
             adminGroupList: user.adminGroupList,
+            ofGroupAdminRole: user.ofGroupAdminRole,
             valid: true
           }
           var userRes = [];

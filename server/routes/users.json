@@ -1,10 +1,7 @@
 { 
 "users": [
-	{"username":"super","email":"super@test.com","ofGroupAdminRole":true,"groupList":["punks","testing"],"adminGroupList":["punks","testing"]},
-	{"username":"test","email":"test.com","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]},
-	{"username":"jesse","email":"jesse@test.com","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]},
-	{"username":"jesse2","email":"jesse2@test.com","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]},
-	{"username":"groupuser@test.com","email":"test","ofGroupAdminRole":false,"groupList":[],"adminGroupList":[]},
-	{"username":"","email":"","ofGroupAdminRole":false,"groupList":["punks"],"adminGroupList":[]},
-	{"username":"testing","email":"testing@test.com","ofGroupAdminRole":false,"groupList":["punks"],"adminGroupList":[]}
+	{"username":"super","email":"super@test.com","ofGroupAdminRole":true,"groupList":["punks"],"adminGroupList":["punks"],"groupChannels":["punks-new","punks-tester","punks-pew","punks-tester"],"channels":["punks-new","punks-tester","punks-pew","punks-tester"]},
+	{"username":"jesse","email":"jesse@test.com","ofGroupAdminRole":false,"ofGroupAssisRole":false,"groupList":["punks"],"adminGroupList":[],"groupChannels":[],"channels":[]},
+	{"username":"test1","email":"test","ofGroupAdminRole":false,"ofGroupAssisRole":false,"groupList":["punks"],"adminGroupList":[],"groupChannels":{},"channels":{}},
+	{"username":"","email":"","ofGroupAdminRole":false,"ofGroupAssisRole":false,"groupList":["punks"],"adminGroupList":[],"groupChannels":{},"channels":{}}
 ] }
