@@ -1,4 +1,5 @@
 { 
 "users": [
-	{"username":"super","email":"super@test.com","ofGroupAdminRole":true,"groupList":["punks"],"adminGroupList":["punks"],"groupChannels":["punks-new","punks-tester","punks-pew","punks-tester"],"channels":["punks-new","punks-tester","punks-pew","punks-tester"]}
+	{"username":"super","email":"super@test.com","ofGroupAdminRole":true,"groupList":["punks"],"adminGroupList":["punks"],"groupChannels":["punks-new","punks-tester","punks-pew","punks-tester"],"channels":["punks-new","punks-tester","punks-pew","punks-tester"]},
+	{"username":"Jesse","email":"Jesse@test.com","ofGroupAdminRole":false,"ofGroupAssisRole":false,"groupList":["punks"],"adminGroupList":[],"groupChannels":{}}
 ] }
