@@ -1,4 +1,6 @@
 { 
 "groups": [
-	{"group":"punks","channels":[]}
+	{"group":"punks","channels":[]},
+	{"group":"pew","channels":[]},
+	{"group":"test","channels":[]}
 ] }

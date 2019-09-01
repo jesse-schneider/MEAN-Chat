@@ -10,6 +10,7 @@ import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { GroupComponent } from './group/group.component';
+import { ChannelComponent } from './channel/channel.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { GroupComponent } from './group/group.component';
     NavComponent,
     HomeComponent,
     AdminComponent,
-    GroupComponent
+    GroupComponent,
+    ChannelComponent
   ],
   imports: [
     BrowserModule,

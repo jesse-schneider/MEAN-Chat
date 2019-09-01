@@ -1,0 +1,15 @@
+<div class="controlPanel">
+<button *ngIf="assis" (click)="showControls()" class="btn btn-primary " id="endButton">Controls</button>
+<h4 class="channelTitle">{{ channel }}</h4>
+<button *ngIf="controls" (click)="showCreateUser()" class="btn btn-primary " id="startButton">Add User to Channel</button>
+<button *ngIf="controls" (click)="showRemoveChannel()" class="btn btn-danger" id="middleButton">Remove User from
+  Channel</button>
+</div>
+  
+  <div class="messageForm">
+    <form id="messageform">
+      <input name="message" type="text" placeholder="Type Message here..." autofocus autocomplete="off" />
+      <button class="btn btn-primary">Send</button>
+    </form>
+  </div>
+

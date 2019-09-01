@@ -11,11 +11,9 @@ module.exports = function (app, groups, userList) {
 
     groups.filter(function (group) {
         if (postedGroup == group.group) {
-            for(i = 0; i < group.channels.length; i++)
-            {
+            for(i = 0; i < group.channels.length; i++) {
               var found = false;
-              if(group.channels[i] == postedChannel)
-              {
+              if(group.channels[i] == postedChannel) {
                 found = true;
               }
               if(found == false) {
@@ -31,7 +29,7 @@ module.exports = function (app, groups, userList) {
             break;
           }
         }
-        userList[userInd].groupChannels.push(postedGroup+"-"+postedChannel);
+         userList[userInd].groupChannels.push(postedGroup+"-"+postedChannel);
 
         fs.writeFileSync('./routes/channels.json', '{ \n"groups": [\n', 'utf8');
         fs.writeFileSync('./routes/users.json', '{ \n"users": [\n', 'utf8');

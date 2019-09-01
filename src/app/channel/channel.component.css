@@ -1,0 +1,63 @@
+.messageForm {
+    width: 70%;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    background: #e6eaee;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    bottom: 0;
+    position: fixed;
+}
+
+button {
+  background: #265f82;
+  transition: background .3s ease;
+}
+
+.messageForm form {
+  flex-grow: 1;
+  display: flex
+}
+
+.messageForm form * {
+  margin-right: 10px
+}
+
+.messageForm input {
+  border: none;
+  padding: 10px;
+  flex-grow: 1
+}
+
+#startButton {
+  display: inline-block;
+  text-align: right;
+  margin: 0 10px 20px 400px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#middleButton {
+  display: inline-block;
+  text-align: center;
+  margin: 0 10px 20px 10px;
+  font-family: 'Montserrat',
+    sans-serif;
+}
+
+#endButton {
+  display: inline-block;
+  text-align: center;
+  margin: 0 100px 20px 10px;
+  font-family: 'Montserrat',
+    sans-serif;
+}
+
+.channelTitle {
+  display: inline;
+  margin-left: 10%;
+}
+

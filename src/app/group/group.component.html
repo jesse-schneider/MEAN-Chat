@@ -1,6 +1,7 @@
 <h5 class="welcome">User: {{ user.username }}</h5>
 <h5 class="welcome">Group: {{ group }}</h5>
-<a href="home"><i class="fas fa-arrow-left backarrow">Back to Groups</i></a>
+<a href="home"><i class="fas fa-arrow-left backarrow"></i><p class="backarrow">Back to Groups</p>
+</a>
 <button *ngIf="assis" (click)="showCreateChannel()" class="btn btn-primary" id="submitbutton">Create new Channel</button>
 <button *ngIf="admin" (click)="showCreateUser()" class="btn btn-primary userbtn" id="middleButton">Add User +</button>
 <button *ngIf="assis" (click)="showRemoveChannel()" class="btn btn-danger userbtn" id="middleButton">Remove Channel</button>
@@ -45,13 +46,15 @@
       <div class="sidebar-sticky">
           <h3 class="welcome">Channels</h3>
           <br>
-          <ul *ngFor="let channel of channelList" class="nav flex-column list-group">
-            <li (click)="activateLiCss(channel)" [ngClass]="activeCss"
-              class="nav-item list-group-item"><i class="fas fa-user-friends channeli"></i>{{ channel }}</li>
+          <ul *ngFor="let i of channelList" class="nav flex-column list-group">
+            <li (click)="selectChannel(i)" [ngClass]="{'active' : i === this.channel}" class="nav-item list-group-item channel-item"><i class="fas fa-user-friends channel"></i>{{ i }}
+            </li>
           </ul>
       </div>
     </nav>
     <main role="main" class="col-lg-10">
-      <div id="adminpage" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"></div>
+      <div id="main" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"></div>
+      <app-channel [channel]="channel"></app-channel>
     </main>
+  </div>
   </div>

@@ -9,6 +9,18 @@ export class GroupService {
 
   constructor(private http: HttpClient) { }
 
+  createGroup(data) {
+    return this.http.post('http://localhost:3000/api/addgroup', data, httpOptions);
+  }
+
+  removeGroup(data) {
+    return this.http.post('http://localhost:3000/api/removegroup', data, httpOptions);
+  }
+
+  createChannel(data) {
+    return this.http.post('http://localhost:3000/api/addchannel', data, httpOptions);
+  }
+
   getChannels(data) {
     return this.http.post('http://localhost:3000/api/channel', data, httpOptions);
   }

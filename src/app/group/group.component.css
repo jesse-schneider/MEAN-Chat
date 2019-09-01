@@ -65,8 +65,12 @@ form input {
 }
 
 .backarrow {
-  margin-left: 2.5%;
+  margin-left: 1.5%;
   font-size: 20px;
+  display: inline;
+}
+.backarrow:hover {
+  text-decoration: none;
 }
 
 .channeli {
@@ -77,4 +81,15 @@ form input {
     margin-left: auto;
     margin-right: auto;
     width: 20em;
+}
+
+.channel-item {
+  cursor: pointer;
+
+  
+
+}
+
+.channel-item:focus {
+  background-color: black;
 }

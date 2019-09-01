@@ -5,7 +5,6 @@ module.exports = function (app, userList, groups) {
     if (!req.body) {
       return res.sendStatus(400);
     }
-    console.log(req.body);
     var userInd;
 
     for(i = 0; i < groups.length; i++) {
@@ -28,7 +27,7 @@ module.exports = function (app, userList, groups) {
             userArr.splice(j, 1);
             }
         }
-        userList[i].channels = userArr;
+        // userList[i].channels = userArr;
     }
        fs.writeFileSync('./routes/users.json', '{ \n"users": [\n', 'utf8');
        fs.writeFileSync('./routes/channels.json', '{ \n"groups": [\n', 'utf8');

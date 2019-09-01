@@ -5,7 +5,7 @@ module.exports = function (app, userList) {
     if (!req.body) {
       return res.sendStatus(400);
     }
-    console.log(req.body);
+    
     var removeInd;
     var response;
 

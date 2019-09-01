@@ -24,14 +24,6 @@ export class AuthService {
     return this.http.post('http://localhost:3000/api/removeuser', data, httpOptions);
   }
 
-  createGroup(data) {
-    return this.http.post('http://localhost:3000/api/addgroup', data, httpOptions);
-  }
-
-  createChannel(data) {
-    return this.http.post('http://localhost:3000/api/addchannel', data, httpOptions);
-  }
-
 }
 
 var httpOptions = {

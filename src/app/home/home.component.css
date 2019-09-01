@@ -48,7 +48,7 @@ form input {
 #startButton {
   display: inline-block;
   text-align: center;
-  margin: 0 10px 20px 650px;
+  margin: 0 10px 20px 800px;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -59,4 +59,8 @@ form input {
   margin: 0 100px 20px 10px;
   font-family: 'Montserrat',
     sans-serif;
+}
+
+.group-item {
+  display: inline-block;
 }

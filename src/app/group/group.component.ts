@@ -11,6 +11,7 @@ export class GroupComponent implements OnInit {
 
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   group = sessionStorage.getItem('Group');
+  channel = "";
   channelList = [];
   userList = [];
   newChannel = "";
@@ -53,10 +54,7 @@ export class GroupComponent implements OnInit {
       this.assis = !this.assis;
     }
 
-    let data = JSON.stringify({ group: this.group});
-
     this.channelList = this.user.groupChannels;
-    this.activeCss = this.channelList;
   }
 
   showCreateChannel() {
@@ -141,24 +139,10 @@ export class GroupComponent implements OnInit {
     this.ugroupAdmin = false;
   }
 
-  activateLiCss(i) {
-    // let count = 0;
-    // let nextAct;
-    // let prevAct;
+  selectChannel(i) {
+    this.channel = i;
+    sessionStorage.setItem('Channel', JSON.stringify(this.channel));
 
-    // for(let channel of this.activeCss) {
-      
-    //   if (channel === 'active') {
-    //     prevAct = count;
-    //   }
-    //   if (channel === i) {
-    //     nextAct = count;
-    //     this.currentCss = channel;
-    //   }
-    //   count++;
-    // }
-    // this.activeCss[nextAct] = "active";
-    // console.log(this.activeCss);
   }
 
   createC() {
@@ -171,7 +155,7 @@ export class GroupComponent implements OnInit {
 
     let data = JSON.stringify(groupObj);
 
-    this.authService.createChannel(data).subscribe((response) => {
+    this.groupService.createChannel(data).subscribe((response) => {
       console.log('response: ', response);
       sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
       this.user = JSON.parse(sessionStorage.getItem('Authenticated_user'));

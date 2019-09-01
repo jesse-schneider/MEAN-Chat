@@ -3,13 +3,10 @@ module.exports = function (app, userList) {
     if (!req.body) {
       return res.sendStatus(400);
     }
-
-    console.log(req.body);
     var username = req.body.username;
 
       userList.filter(function (user) {
         if (user.username == username) {
-          console.log(user);
           if (user.username == 'super') {
             return res.send(userList);
           }
