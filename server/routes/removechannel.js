@@ -17,7 +17,6 @@ module.exports = function (app, userList) {
             userArr.splice(j, 1);
             }
         }
-        // userList[i].channels = userArr;
     }
        fs.writeFileSync('./routes/users.json', '{ \n"users": [\n', 'utf8');
        for (i = 0; i < userList.length - 1; i++) {
