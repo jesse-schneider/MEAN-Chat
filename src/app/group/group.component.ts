@@ -54,7 +54,14 @@ export class GroupComponent implements OnInit {
       this.assis = !this.assis;
     }
 
-    this.channelList = this.user.groupChannels;
+    for (let i in this.user.groupChannels) {
+      var str = this.user.groupChannels[i].split('-');
+      if(str[0] != this.group) {
+        continue;
+      } else {
+        this.channelList.push(this.user.groupChannels[i]);
+      }
+    }
   }
 
   showCreateChannel() {
@@ -159,7 +166,15 @@ export class GroupComponent implements OnInit {
       console.log('response: ', response);
       sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
       this.user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
-      this.channelList = this.user.groupChannels;
+      this.channelList = [];
+      for (let i in this.user.groupChannels) {
+        var str = this.user.groupChannels[i].split('-');
+        if (str[0] != this.group) {
+          continue;
+        } else {
+          this.channelList.push(this.user.groupChannels[i]);
+        }
+      }
     }, (error) => {
       console.log('error: ', error);
     });
@@ -170,10 +185,18 @@ export class GroupComponent implements OnInit {
       console.log('response: ', response);
       sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
       this.user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
-      this.channelList = this.user.groupChannels;
+      this.channelList = [];
+      for (let i in this.user.groupChannels) {
+        var str = this.user.groupChannels[i].split('-');
+        if (str[0] != this.group) {
+          continue;
+        } else {
+          this.channelList.push(this.user.groupChannels[i]);
+        }
+      }
     }, (error) => {
       console.log('error: ', error);
     });
   }
-    
+  
 }

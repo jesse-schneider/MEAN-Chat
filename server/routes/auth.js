@@ -16,6 +16,7 @@ module.exports = function (app, userList) {
             groupList: user.groupList,
             adminGroupList: user.adminGroupList,
             ofGroupAdminRole: user.ofGroupAdminRole,
+            groupChannels: user.groupChannels,
             valid: true
           }
           var userRes = [];

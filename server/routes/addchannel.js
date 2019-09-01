@@ -9,20 +9,6 @@ module.exports = function (app, groups, userList) {
     var postedChannel = req.body.channel;
     var userInd;
 
-    groups.filter(function (group) {
-        if (postedGroup == group.group) {
-            for(i = 0; i < group.channels.length; i++) {
-              var found = false;
-              if(group.channels[i] == postedChannel) {
-                found = true;
-              }
-              if(found == false) {
-                group.channels.push(postedChannel);
-              }
-            }
-          }
-        });
-
         for(i = 0; i < userList.length; i++) {
           if (userList[i].username == req.body.user) {
             userInd = i;

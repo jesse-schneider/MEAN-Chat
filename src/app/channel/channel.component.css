@@ -61,3 +61,32 @@ button {
   margin-left: 10%;
 }
 
+#createUser, #removeUser {
+  margin-left: auto;
+  margin-right: auto;
+  width: 20em;
+  margin-top: 10px;
+  display: block;
+}
+
+form input,
+form label {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.lbl {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+form input {
+  padding: 0.5em;
+  width: 20em;
+}
+
+#createUser,
+#removeUser {
+  text-align: center;
+}

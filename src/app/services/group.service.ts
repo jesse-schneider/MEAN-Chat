@@ -28,6 +28,14 @@ export class GroupService {
   removeChannel(data) {
     return this.http.post('http://localhost:3000/api/removechannel', data, httpOptions);
   }
+
+  addUtoChannel(data) {
+    return this.http.post('http://localhost:3000/api/adduserchannel', data, httpOptions);
+  }
+
+  removeUfromChannel(data) {
+    return this.http.post('http://localhost:3000/api/removeuserchannel', data, httpOptions);
+  }
 }
 
 var httpOptions = {

@@ -69,10 +69,6 @@ form input {
   font-size: 20px;
   display: inline;
 }
-.backarrow:hover {
-  text-decoration: none;
-}
-
 .channeli {
   padding-right: 10px;
 }
@@ -85,11 +81,4 @@ form input {
 
 .channel-item {
   cursor: pointer;
-
-  
-
-}
-
-.channel-item:focus {
-  background-color: black;
 }
