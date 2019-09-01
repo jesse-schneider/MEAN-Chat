@@ -1,17 +1,11 @@
 var fs = require('fs');
 
-module.exports = function (app, userList, groups) {
+module.exports = function (app, userList) {
   app.post('/api/removegroup', (req, res) => {
     if (!req.body) {
       return res.sendStatus(400);
     }
     var userInd;
-
-    for (i = 0; i < groups.length; i++) {
-        if (groups[i].group == req.body.group) {
-            groups.splice(i, 1);
-        }
-    }
 
     for (i = 0; i < userList.length; i++) {
       var groupListArr = userList[i].groupList;
@@ -39,17 +33,11 @@ module.exports = function (app, userList, groups) {
           }
         }
     fs.writeFileSync('./routes/users.json', '{ \n"users": [\n', 'utf8');
-    fs.writeFileSync('./routes/channels.json', '{ \n"groups": [\n', 'utf8');
     for (i = 0; i < userList.length - 1; i++) {
       fs.appendFileSync('./routes/users.json', "\t" + JSON.stringify(userList[i]) + ",\n", 'utf8');
     }
-    for (i = 0; i < groups.length - 1; i++) {
-      fs.appendFileSync('./routes/channels.json', "\t" + JSON.stringify(groups[i]) + ",\n", 'utf8');
-    }
     fs.appendFileSync('./routes/users.json', "\t" + JSON.stringify(userList[userList.length - 1]) + "\n", 'utf8');
-    fs.appendFileSync('./routes/channels.json', "\t" + JSON.stringify(groups[groups.length - 1]) + "\n", 'utf8');
     fs.appendFileSync('./routes/users.json', '] }', 'utf8');
-    fs.appendFileSync('./routes/channels.json', '] }', 'utf8');
 
     res.send(userList[userInd]);
   });

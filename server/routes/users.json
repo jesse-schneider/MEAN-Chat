@@ -1,5 +1,7 @@
 { 
 "users": [
-	{"username":"super","email":"super@test.com","ofGroupAdminRole":true,"groupList":["punks","pew","test"],"adminGroupList":["punks","pew","test"],"groupChannels":["punks-newnew","punks-newnewnew","punks-null","punks-Test"]},
-	{"username":"Jesse","email":"Jesse@test.com","ofGroupAdminRole":false,"ofGroupAssisRole":false,"groupList":["punks"],"adminGroupList":[],"groupChannels":["punks-Test",null,null,null]}
+	{"username":"super","email":"super@test.com","ofGroupAdminRole":true,"groupList":["Supers"],"adminGroupList":["Supers"],"groupChannels":["punks-newnewnew","punks-Test","Supers-chanone","Supers-chantwo"]},
+	{"username":"assis","email":"assis@test.com","ofGroupAdminRole":false,"ofGroupAssisRole":true,"groupList":[],"adminGroupList":[],"groupChannels":["punks-newnewnew","punks-Test"]},
+	{"username":"Jesse","email":"Jesse@test.com","ofGroupAdminRole":false,"ofGroupAssisRole":false,"groupList":[],"adminGroupList":[],"groupChannels":[]},
+	{"username":"stuart","email":"stuart@test.com","ofGroupAdminRole":false,"ofGroupAssisRole":false,"groupList":["Supers"],"adminGroupList":[],"groupChannels":["Supers-chanone"]}
 ] }

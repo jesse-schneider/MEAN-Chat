@@ -24,8 +24,7 @@ module.exports = function (app, userList) {
     userList.push(user);
     try {
         fs.writeFileSync('./routes/users.json', '{ \n"users": [\n', 'utf8');
-        for(i = 0; i < userList.length-1; i++)
-        {
+        for(i = 0; i < userList.length-1; i++) {
             fs.appendFileSync('./routes/users.json', "\t" + JSON.stringify(userList[i]) + ",\n", 'utf8');
         }
         fs.appendFileSync('./routes/users.json', "\t" + JSON.stringify(userList[userList.length - 1]) + "\n", 'utf8');

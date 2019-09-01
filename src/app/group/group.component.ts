@@ -33,7 +33,7 @@ export class GroupComponent implements OnInit {
   ugroupAdmin = false;
   ugroupAssis = false;
   ugroupList = [];
-  ugroupChannels = {};
+  ugroupChannels = [];
   uadminGroupList = [];
 
   constructor(private authService: AuthService, private groupService: GroupService) { }
