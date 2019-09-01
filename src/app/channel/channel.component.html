@@ -11,14 +11,15 @@
     <label for="username" class="lbl">User to Add: </label>
     <input type="username" [(ngModel)]="userToAdd" name="username" id="username" autofocus required />
     <button (click)="addUserToChannel();show = !show" id="savebutton" class="btn btn-dark"
-      style="margin-top: 20px;">Save</button>
+      style="margin-top: 20px;">Add User</button>
   </form>
 </div>
 <div id="removeUser">
   <form *ngIf="removeUser" id="removeUser">
     <label for="removeUser" class="lbl">User to Remove: </label>
     <input type="username" [(ngModel)]="userToRemove" name="removeUser" id="removeUser" autofocus required />
-    <button type="button" (click)="removeUserFromChannel()" id="savebutton" class="btn btn-dark">Save</button>
+    <button type="button" (click)="removeUserFromChannel()" id="savebutton" class="btn btn-dark"
+      style="margin-top: 20px;">Remove User</button>
   </form>
 </div>
   

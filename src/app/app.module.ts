@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
-import { AdminComponent } from './admin/admin.component';
 import { GroupComponent } from './group/group.component';
 import { ChannelComponent } from './channel/channel.component';
 
@@ -19,7 +18,6 @@ import { ChannelComponent } from './channel/channel.component';
     LoginComponent,
     NavComponent,
     HomeComponent,
-    AdminComponent,
     GroupComponent,
     ChannelComponent
   ],

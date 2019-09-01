@@ -90,7 +90,7 @@ export class ChannelComponent implements OnInit {
       group: this.group
     }
 
-    this.groupService.addUtoChannel(post).subscribe((response) => {
+    this.groupService.removeUFromChannel(post).subscribe((response) => {
       console.log('response: ', response);
     }, (error) => {
       console.log('error: ', error);

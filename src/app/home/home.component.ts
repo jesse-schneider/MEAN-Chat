@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupService } from './../services/group.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,21 +10,28 @@ import { GroupService } from './../services/group.service';
 export class HomeComponent implements OnInit {
 
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
-  groupList = this.user.groupList;
   newGroup = "";
   groupToRemove = "";
   createGroup = false;
   removeGroup = false;
   admin = false;
+  loggedIn = false;
   
 
-  constructor(private groupService: GroupService) { }
+  constructor(private router: Router, private groupService: GroupService) { }
 
   ngOnInit() {
+    if (sessionStorage.getItem('Authenticated_user') == null) {
+      return this.router.navigateByUrl('');
+    } else {
+      this.loggedIn = true;
+    }
     if (this.user.ofGroupAdminRole == true)
     {
       this.admin = !this.admin;
     }
+
+
   }
 
   showCreateGroup() {
@@ -68,8 +76,6 @@ export class HomeComponent implements OnInit {
         console.log('response: ', response);
         sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
         this.user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
-        this.groupList = this.user.groupList;
-
       }, (error) => {
         console.log('error: ', error);
       });

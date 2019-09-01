@@ -33,7 +33,7 @@ export class GroupService {
     return this.http.post('http://localhost:3000/api/adduserchannel', data, httpOptions);
   }
 
-  removeUfromChannel(data) {
+  removeUFromChannel(data) {
     return this.http.post('http://localhost:3000/api/removeuserchannel', data, httpOptions);
   }
 }
