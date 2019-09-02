@@ -34,23 +34,29 @@ Components:
 `Nav` 
 
 The navigation bar at the top of every page
+
 `Login`
 
 The login page found at root directory
+
 `Home`
 
 A user’s home screen, where the login redirects following success
+
 `Group`
 
 The group homepage, where clicking on a group on home will redirect to
+
 `Channel`
 
 The child component inside group, that reflects the content of the current channel
 
 Services:
+
 `AuthService`
 
 The AuthService handles all user authentication requests
+
 `GroupService`
 
 The GroupService handles all group related and channel related requests
