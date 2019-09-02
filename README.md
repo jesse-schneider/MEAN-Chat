@@ -30,31 +30,31 @@ This User object can represent and store everything required when a user is logg
 
 ## Angular Architecture
 Components:
-Nav 
+`Nav` 
 The navigation bar at the top of every page
-Login
+`Login`
 The login page found at root directory
-Home
+`Home`
 A user’s home screen, where the login redirects following success
-Group
+`Group`
 The group homepage, where clicking on a group on home will redirect to
-Channel
+`Channel`
 The child component inside group, that reflects the content of the current channel
 Services:
-AuthService
-GroupService
+`AuthService`
+The AuthService handles all user authentication requests
+`GroupService`
+The GroupService handles all group related and channel related requests
 
 ### Routes:
-/
-The root directory
-Home
-The home page, redirected to following login
-Group 
-The group page, redirected to after clicking on a group, contains channel component
+`/` The root directory
+`Home` The home page, redirected to following login
+`Group` The group page, redirected to after clicking on a group, contains channel component
 
 ## Node Server Architecture
 The general backend is run by the `server.js` file located in the /server folder. All the routes are broken up into a module each, in their own separate file in /server/routes.
 
+```
 MEANchat/Server
 		\server.js
 			/routes
@@ -67,6 +67,7 @@ MEANchat/Server
 			\removegroup.js
 			\removeuser.js
 			\removeuserchannel.js
+ ```
 		
 ### Functions:
 All routes files contain 1 function per route. In the server.js, the only other functions used are applying middleware, requiring modules, and running the server.
@@ -94,43 +95,43 @@ Request: Request object containing username of user to be removed
 Response: Response object, with string of removal status
 Purpose: Used when a super user or GroupAdmin wishes to remove a user from the system
 
-POST /api/addgroup
+`POST /api/addgroup`
 
 Request: Request Object containing User Object including new group
 Response: : Response object, with string of add status
 Purpose: Used when a super user or GroupAdmin wishes to add a new group to the system
 
-POST /api/removegroup
+`POST /api/removegroup`
 
 Request: Request object containing name of group to be removed, and the user who did it
 Response: Updated User Object Absent the removed group
 Purpose: Used when a super user or GroupAdmin wishes to remove a group from the system
 
-POST /api/addchannel
+`POST /api/addchannel`
 
 Request: Request Object containing the group, channel to be created and the user who requested it
 Response: Updated User Object including the added group
 Purpose: Used when a relevant user wishes to add a new channel to the current group
 
-POST /api/removechannel
+`POST /api/removechannel`
 
 Request: Request Object containing the group, channel to be removed and the user who requested it
 Response: Updated User Object absent the removed group
 Purpose:  Used when a relevant user wishes to remove a channel from the current group
 
-POST /api/adduserchannel
+`POST /api/adduserchannel`
 
 Request:  Request Object containing the group, channel to add the user to and the user to add
 Response:  Updated User Object including the added channel
 Purpose: Used when a relevant user wishes to add a user to the current channel 
 
-POST /api/removeuserchannel
+`POST /api/removeuserchannel`
 
 Request:  Request Object containing the group, channel to remove the user from and the user to remove
 Response:  Updated User Object absent the removed channel
 Purpose: Used when a relevant user wishes to remove a user from the current channel 
 
-/api/auth
+`/api/auth`
 
 Request: Request Object containing the username of the user to authenticate
 Response: The authenticated User Object, or in the case of the super user, an array of all users
