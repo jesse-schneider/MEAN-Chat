@@ -30,8 +30,6 @@ export class HomeComponent implements OnInit {
     {
       this.admin = !this.admin;
     }
-
-
   }
 
   showCreateGroup() {
