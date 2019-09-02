@@ -31,24 +31,34 @@ This User object can represent and store everything required when a user is logg
 ## Angular Architecture
 Components:
 `Nav` 
+
 The navigation bar at the top of every page
 `Login`
+
 The login page found at root directory
 `Home`
+
 A user’s home screen, where the login redirects following success
 `Group`
+
 The group homepage, where clicking on a group on home will redirect to
 `Channel`
+
 The child component inside group, that reflects the content of the current channel
+
 Services:
 `AuthService`
+
 The AuthService handles all user authentication requests
 `GroupService`
+
 The GroupService handles all group related and channel related requests
 
 ### Routes:
 `/` The root directory
+
 `Home` The home page, redirected to following login
+
 `Group` The group page, redirected to after clicking on a group, contains channel component
 
 ## Node Server Architecture
