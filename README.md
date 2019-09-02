@@ -30,6 +30,7 @@ This User object can represent and store everything required when a user is logg
 
 ## Angular Architecture
 Components:
+
 `Nav` 
 
 The navigation bar at the top of every page
