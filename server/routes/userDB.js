@@ -1,8 +1,8 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
-var mongodb = require('mongodb');
 var ObjectID = require('mongodb').ObjectID;
 
+//add a user from a JSON Object
 exports.addUser = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     if (err) throw err;
@@ -17,7 +17,7 @@ exports.addUser = function (req, res) {
   });
 };
 
-
+//find and remove a selected user
 exports.removeUser = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("meanchat");
@@ -29,6 +29,23 @@ exports.removeUser = function (req, res) {
         res.send(query);
         client.close();
       });
+    });
+  });
+};
+
+//authentication function -> find requested user and return, or else return error
+exports.authenticate = function (req, res) {
+  MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+    if (err) throw err;
+    var db = client.db("meanchat");
+    var query = {
+      username: req.body.username,
+      password: req.body.password
+    };
+    db.collection("users").find(query).toArray((err, user) => {
+      if (err) throw err;
+      res.send(user);
+      client.close();
     });
   });
 };
