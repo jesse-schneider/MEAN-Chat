@@ -2,8 +2,6 @@
 var express = require('express');
 const bodyparser = require('body-parser');
 const cors = require('cors');
-const io = require('socket.io')(http);
-const PORT = 3000;
 
 //app middleware
 var app = express();
@@ -37,6 +35,8 @@ app.post('/api/removeuserchannel', usersChannels.removeUserFromChannel);
 
 //adding sockets.io to API server
 const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const PORT = 3000;
 
 //on connection, show connection, on message emit message
 io.on('connection', (socket) => {

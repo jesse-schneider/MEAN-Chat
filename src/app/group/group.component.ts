@@ -156,7 +156,8 @@ export class GroupComponent implements OnInit {
     let groupObj = {
       group: this.group,
       channel: this.newChannel,
-      user: this.user.username
+      user: this.user.username,
+      messages: []
     };
     this.newChannel = "";
 
