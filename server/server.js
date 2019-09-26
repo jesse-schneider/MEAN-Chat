@@ -1,10 +1,11 @@
+//npm modules
 var express = require('express');
-var fs = require('fs');
 const bodyparser = require('body-parser');
-const path = require('path');
 const cors = require('cors');
+const io = require('socket.io')(http);
+const PORT = 3000;
 
-var http = require('http').Server(app);
+//app middleware
 var app = express();
 app.use(cors());
 app.use(bodyparser.json());
@@ -34,6 +35,22 @@ app.post('/api/removechannel', channelDB.removeChannel);
 app.post('/api/adduserchannel', usersChannels.addUserToChannel);
 app.post('/api/removeuserchannel', usersChannels.removeUserFromChannel);
 
-app.listen(3000, () => {
-  console.log("node server is listening on port 3000");
+//adding sockets.io to API server
+const http = require('http').Server(app);
+
+//on connection, show connection, on message emit message
+io.on('connection', (socket) => {
+  console.log(`User connection on port ${PORT}: ${socket.id}`);
+  //emit incoming message to all sockets 
+  socket.on('message', (message) => {
+    io.emit('message', message);
+  });
+});
+
+//listen on http sockets.io server
+http.listen(PORT, () => {
+  let date = new Date();
+  let hour = date.getHours();
+  let minute = date.getMinutes();
+  console.log(`Server has been started on port ${PORT} at ${hour}:${minute}`);
 });

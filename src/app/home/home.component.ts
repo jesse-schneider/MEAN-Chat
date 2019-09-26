@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
+  groups = [];
   newGroup = "";
   groupToRemove = "";
   createGroup = false;
@@ -25,6 +26,9 @@ export class HomeComponent implements OnInit {
       return this.router.navigateByUrl('');
     } else {
       this.loggedIn = true;
+      // this.groupService.getAllGroups(this.user._id).subscribe((res) => {
+      //   console.log(res);
+      // });
     }
     if (this.user.ofGroupAdminRole == true)
     {
@@ -50,11 +54,15 @@ export class HomeComponent implements OnInit {
   }
 
   create(){
-    this.user.adminGroupList.push(this.newGroup);
-    this.user.groupList.push(this.newGroup);
+    let post = {
+      name: this.newGroup,
+      createdBy: this.user.username,
+      users: [this.user.username]
+    };
+
     this.newGroup = "";
 
-    let data = JSON.stringify(this.user);
+    let data = JSON.stringify(post);
 
     this.groupService.createGroup(data).subscribe((response) => {
       console.log('response: ', response);
