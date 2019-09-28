@@ -21,9 +21,9 @@ exports.addUser = function (req, res) {
 exports.removeUser = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("meanchat");
+    let id = new ObjectID(req.body.user);
+    let query = { _id: id };
     db.collection("users", (err, collection) => {
-      let id = ObjectID(req.body.id);
-      let query = {_id: id };
       collection.deleteOne(query, (err, result) => {
         console.log("Removed user with ID: ", query);
         res.send(query);

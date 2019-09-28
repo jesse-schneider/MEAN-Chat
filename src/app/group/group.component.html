@@ -20,24 +20,47 @@
     <input type="username" [(ngModel)]="uusername" name="username" id="username" autofocus required />
     <label for="email" class="lbl">Email: </label>
     <input type="email" [(ngModel)]="uemail" name="email" id="email" required />
+    <label for="password" class="lbl">Password: </label>
+    <input type="password" [(ngModel)]="upassword" name="password" id="password" required />
     <button (click)="addU();show = !show" id="savebutton" class="btn btn-dark btn-lg" style="margin-top: 20px;">Save</button>
   </form>
   </div>
   <div class="removeChannelForm">
     <form *ngIf="removeChannel" id="removeChannel">
-      <label for="removeChannel" class="lbl">Channel to Remove: </label>
-      <input type="removeChannel" [(ngModel)]="channelToRemove" name="removeChannel" id="removeChannel" autofocus
-        required />
-      <button type="button" (click)="removeC();showRemoveChannel()" id="savebutton"
-        class="btn btn-dark btn-lg">Save</button>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th style="width: 50%" scope="col">Channel</th>
+            <th style="width: 50%" scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let channel of channelList">
+            <th scope="row" class="tabletext">{{channel}}</th>
+            <td>
+              <button type="button" (click)="removeC(channel);showRemoveChannel()" class="btn btn-primary btn-sm">Remove</button>
+            </td>
+        </tbody>
+      </table>
     </form>
   </div>
   <div class="removeUserForm">
     <form *ngIf="removeUser" id="removeUser">
-      <label for="removeUser" class="lbl">User to Remove: </label>
-      <input type="removeUser" [(ngModel)]="userToRemove" name="removeUser" id="removeUser" autofocus
-        required />
-      <button type="button" (click)="removeU()" id="savebutton" class="btn btn-dark btn-lg">Save</button>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th style="width: 50%" scope="col">Name</th>
+            <th style="width: 50%" scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of allUsers">
+            <th scope="row" class="tabletext">{{user.username}}</th>
+            <td>
+              <button type="button" (click)="removeU(user._id);show = !show" class="btn btn-primary btn-sm">Remove</button>
+            </td>
+        </tbody>
+      </table>
     </form>
   </div>
 <div class="container-fluid">

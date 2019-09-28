@@ -13,10 +13,8 @@ export class GroupComponent implements OnInit {
   group = sessionStorage.getItem('Group');
   channel = "";
   channelList = [];
-  userList = [];
+  allUsers:any = [];
   newChannel = "";
-  channelToRemove = "";
-  userToRemove = "";
   createChannel = false;
   removeChannel = false;
   removeUser = false;
@@ -24,12 +22,10 @@ export class GroupComponent implements OnInit {
   admin = false;
   sadmin = false;
   assis = false;
-  activeCss = [];
-  currentCss = "";
-  
 
   uusername = "";
   uemail = "";
+  upassword: "";
   ugroupAdmin = false;
   ugroupAssis = false;
   ugroupList = [];
@@ -39,9 +35,7 @@ export class GroupComponent implements OnInit {
   constructor(private authService: AuthService, private groupService: GroupService) { }
 
   ngOnInit() {
-    let storageJson = sessionStorage.getItem('Users');
-    this.userList = JSON.parse(storageJson);
-
+    //on init, check user roles, and grab user's channels to put into channels list array
     if (this.user.ofGroupAdminRole == true) {
       this.admin = !this.admin;
     }
@@ -62,9 +56,15 @@ export class GroupComponent implements OnInit {
         this.channelList.push(this.user.groupChannels[i]);
       }
     }
+
+    this.authService.getAllUsers().subscribe((response) => {
+      this.allUsers = response;
+      console.log(this.allUsers);
+    });
   }
 
   showCreateChannel() {
+    //visiblity of the create channel elements
     this.createChannel = !this.createChannel;
     if(this.createUser == true) {
       this.createUser = false;
@@ -76,6 +76,7 @@ export class GroupComponent implements OnInit {
   }
 
   showRemoveChannel() {
+    //visiblity of the remove channel elements
     this.removeChannel = !this.removeChannel;
     if (this.createUser == true) {
       this.createUser = false;
@@ -87,6 +88,7 @@ export class GroupComponent implements OnInit {
   }
 
   showCreateUser() {
+    //visiblity of the create user elements
     this.createUser = !this.createUser;
     if (this.createChannel == true) {
       this.createChannel = false;
@@ -98,6 +100,7 @@ export class GroupComponent implements OnInit {
   }
 
   showRemoveUser() {
+    //visiblity of the remove user elements
     this.removeUser = !this.removeUser;
     if (this.createUser == true) {
       this.createUser = false;
@@ -109,9 +112,11 @@ export class GroupComponent implements OnInit {
   }
 
   addU() {
+    //new user object
     let user = {
       username: this.uusername,
       email: this.uemail,
+      password: this.upassword,
       groupAdmin: this.ugroupAdmin,
       groupAssis: this.ugroupAssis,
       groupList: this.ugroupList,
@@ -122,10 +127,11 @@ export class GroupComponent implements OnInit {
 
     let data = JSON.stringify(user);
 
+    //send request to api to add a new user, and have them automatically added to this current group
     this.authService.createUser(data).subscribe((response) => {
       console.log('response: ', response);
-      this.userList.push(response);
-      sessionStorage.setItem('Users', JSON.stringify(this.userList));
+      this.allUsers.push(response);
+      sessionStorage.setItem('Users', JSON.stringify(this.allUsers));
       this.resetFields();
       this.showCreateUser();
     }, (error) => {
@@ -133,11 +139,24 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  removeU() {
-    console.log(this.userToRemove);
-    this.authService.removeUser(JSON.parse("{\"remove\": \"" + this.userToRemove + "\", \"user\": \"" + this.user.username + "\" }")).subscribe((response) => {
+  removeU(i) {
+    //create post object
+    let post = {
+      user: i
+    };
+    let data = JSON.stringify(post);
+
+    //send user id to be deleted
+    this.authService.removeUser(data).subscribe((response) => {
       console.log(response);
+      //get updated user list back and update local session storage
+      this.authService.getAllUsers().subscribe((response) => {
+        this.allUsers = response;
+        sessionStorage.setItem('Users', JSON.stringify(this.allUsers));
+        console.log(this.allUsers);
+      });
     });
+    this.showRemoveUser();
   }
 
   resetFields() {
@@ -163,6 +182,7 @@ export class GroupComponent implements OnInit {
 
     let data = JSON.stringify(post);
 
+    //send request containing new channel to be created in current group
     this.groupService.createChannel(data).subscribe((response) => {
       console.log('response: ', response);
       sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
@@ -182,16 +202,17 @@ export class GroupComponent implements OnInit {
     this.newChannel = "";
   }
   
-  removeC() {
-
+  removeC(i) {
+    //create post object
     let post = {
       group: this.group,
-      channel: this.channelToRemove,
+      channel: i,
       user: this.user._id
     };
 
       let data = JSON.stringify(post);
 
+    //send request with group service to remove channel from current group
     this.groupService.removeChannel(data).subscribe((response) => {
       console.log('response: ', response);
       sessionStorage.setItem('Authenticated_user', JSON.stringify(response));

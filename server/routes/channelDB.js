@@ -30,6 +30,7 @@ exports.addChannel = function (req, res) {
 
 exports.removeChannel = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+    console.log(req.body);
     let db = client.db("meanchat");
     let userID = ObjectID(req.body.user);
     let channel = req.body;
