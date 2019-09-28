@@ -64,12 +64,42 @@ exports.allUsers = function (req, res) {
 };
 
 exports.uploadImage = function (req, res) {
-  var DIR = __dirname + '/img/';
-  var upload = multer({ dest: DIR }).single('photo');
+
+  var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './../src/assets/img/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + '.png') 
+    }
+  })
+  
+  var upload = multer({ storage: storage }).single('photo');
   var path = '';
-  //grab incoming user details ready to store in mongoDB
-    upload(req, res, function (err) {
+
+    upload(req, res, (err) => {
+      var user = new ObjectID(req.body.user);
       if (err) {
         console.log(err);
-        return res.status(422).send("an Error occured")
+        return res.status(422).send("an Error occured");
       }
+      path = req.file.path;
+
+      //save path to mongoDB
+        MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+          let db = client.db("meanchat");
+          db.collection("users", (err, collection) => {
+            collection.updateOne({ _id: user }, {
+              $set: {
+                profilePicLocation: path
+              }
+            }, (err, result) => {
+              collection.findOne({ _id: user }, (err, document) => {
+                return res.send(document);
+              });
+              client.close();
+            });
+          });
+        });
+    });
+  };
