@@ -153,15 +153,15 @@ export class GroupComponent implements OnInit {
   }
 
   createC() {
-    let groupObj = {
+    //create post object
+    let post = {
       group: this.group,
       channel: this.newChannel,
-      user: this.user.username,
+      user: this.user._id,
       messages: []
     };
-    this.newChannel = "";
 
-    let data = JSON.stringify(groupObj);
+    let data = JSON.stringify(post);
 
     this.groupService.createChannel(data).subscribe((response) => {
       console.log('response: ', response);
@@ -179,10 +179,20 @@ export class GroupComponent implements OnInit {
     }, (error) => {
       console.log('error: ', error);
     });
+    this.newChannel = "";
   }
   
   removeC() {
-    this.groupService.removeChannel(JSON.parse("{\"channel\": \"" + this.channelToRemove + "\", \"user\": \"" + this.user.username + "\" }")).subscribe((response) => {
+
+    let post = {
+      group: this.group,
+      channel: this.channelToRemove,
+      user: this.user._id
+    };
+
+      let data = JSON.stringify(post);
+
+    this.groupService.removeChannel(data).subscribe((response) => {
       console.log('response: ', response);
       sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
       this.user = JSON.parse(sessionStorage.getItem('Authenticated_user'));

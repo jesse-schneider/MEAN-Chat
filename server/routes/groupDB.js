@@ -9,6 +9,7 @@ exports.addGroup = function (req, res) {
     let db = client.db("meanchat");
     db.collection("users", (err, collection) => {
       var group = req.body;
+      console.log(group);
       var userID = new ObjectID(group.id);
       collection.updateOne({ _id: userID }, {
         $push: {
@@ -17,7 +18,9 @@ exports.addGroup = function (req, res) {
         }
       }, (err, result) => {
         console.log("for the documents with", userID);
-        res.send(result);
+        collection.findOne({ _id: userID }, (err, document) => {
+          res.send(document);
+        });
         client.close();
       });
     });
@@ -29,8 +32,9 @@ exports.addGroup = function (req, res) {
 exports.removeGroup = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("meanchat");
+    var groupToRemove = req.body.group;
+    var userID = ObjectID(req.body.id);
     db.collection("users", (err, collection) => {
-      var groupToRemove = req.body.groupToRemove;
       collection.updateMany({}, {
         $pull: {
           groupList: groupToRemove,
@@ -38,7 +42,9 @@ exports.removeGroup = function (req, res) {
         }
       }, (err, result) => {
         console.log("removed group: ", groupToRemove);
-        res.send(result);
+        collection.findOne({ _id: userID }, (err, document) => {
+          res.send(document);
+        });
         client.close();
       });
     });

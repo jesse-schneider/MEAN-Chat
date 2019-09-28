@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GroupService } from './../services/group.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-channel',
@@ -15,15 +16,14 @@ export class ChannelComponent implements OnInit {
   userList = [];
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   group = sessionStorage.getItem('Group');
+  allUsers:any = [];
   channelList = [];
+  messages = [];
 
-  userToRemove = "";
-  userToAdd = "";
-  controls = false;
-  createUser = false;
-  removeUser = false;
+  userManagement = false;
 
-  constructor(private groupService: GroupService) { }
+
+  constructor(private groupService: GroupService, private authService: AuthService) { }
 
   ngOnInit() {
     let storageJson = sessionStorage.getItem('Users');
@@ -43,59 +43,49 @@ export class ChannelComponent implements OnInit {
 
     this.channelList = this.user.groupChannels;
     this.channel = JSON.parse(sessionStorage.getItem('Channel'));
+    this.authService.getAllUsers().subscribe((response) => {
+      this.allUsers = response;
+      console.log(this.allUsers);
+    });
   }
 
-  showControls() {
-    this.controls = !this.controls;
-    if (this.removeUser == true) {
-      this.removeUser = false;
-    }
-    if (this.createUser == true) {
-      this.createUser = false;
-    }
-  }
-  showCreateUser() {
-    this.createUser = !this.createUser;
-    if (this.removeUser == true) {
-      this.removeUser = false;
-    }
+  showUsers() {
+    //show/hide the user table
+    this.userManagement = !this.userManagement;
   }
 
-  showRemoveUser() {
-    this.removeUser = !this.removeUser;
-    if (this.createUser == true) {
-      this.createUser = false;
-    }
-  }
-
-  addUserToChannel() {
+  addUserToChannel(id:any) {
+    //create post object
     let post = {
-      user: this.userToAdd,
+      user: id,
       channel: this.channel,
       group: this.group
     }
 
+    //use group service to send new user to api, add channel to their channel array
     this.groupService.addUtoChannel(post).subscribe((response) => {
       console.log('response: ', response);
     }, (error) => {
       console.log('error: ', error);
     });
-
+    this.showUsers();
   }
 
-  removeUserFromChannel() {
+  removeUserFromChannel(id) {
+    //create post object
     let post = {
-      user: this.userToRemove,
+      user: id,
       channel: this.channel,
       group: this.group
     }
 
+    //use group service to send user to be removed from channel to the api
     this.groupService.removeUFromChannel(post).subscribe((response) => {
       console.log('response: ', response);
     }, (error) => {
       console.log('error: ', error);
     });
-
+    this.showUsers();
   }
 
 }

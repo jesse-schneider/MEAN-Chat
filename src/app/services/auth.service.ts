@@ -24,6 +24,10 @@ export class AuthService {
     return this.http.post('http://localhost:3000/api/removeuser', data, httpOptions);
   }
 
+  getAllUsers() {
+    return this.http.get('http://localhost:3000/api/getallusers', httpOptions);
+  }
+
 }
 
 var httpOptions = {

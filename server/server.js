@@ -19,6 +19,7 @@ var usersChannels = require('./routes/users-channels.js');
 app.post('/api/adduser', userDB.addUser);
 app.post('/api/removeuser', userDB.removeUser);
 app.post('/api/auth', userDB.authenticate);
+app.get('/api/getallusers', userDB.allUsers);
 
 //group db operation routes
 app.post('/api/addgroup', groupDB.addGroup);

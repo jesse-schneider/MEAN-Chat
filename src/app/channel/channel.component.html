@@ -1,27 +1,34 @@
 <div class="controlPanel">
-<button *ngIf="assis" (click)="showControls()" class="btn btn-primary " id="endButton">Controls</button>
+<button *ngIf="assis" (click)="showUsers()" class="btn btn-primary " id="endButton">Manage Users</button>
 <h4 class="channelTitle">{{ channel }}</h4>
-<button *ngIf="controls" (click)="showCreateUser()" class="btn btn-primary " id="startButton">Add User to Channel</button>
-<button *ngIf="controls" (click)="showRemoveUser()" class="btn btn-danger" id="middleButton">Remove User from
-  Channel</button>
 </div>
 
 <div id="createUser">
-  <form *ngIf="createUser" id="createUser">
-    <label for="username" class="lbl">User to Add: </label>
-    <input type="username" [(ngModel)]="userToAdd" name="username" id="username" autofocus required />
-    <button (click)="addUserToChannel();show = !show" id="savebutton" class="btn btn-dark"
-      style="margin-top: 20px;">Add User</button>
+  <form *ngIf="userManagement" id="createUser">
+    <table class="table table-striped userlist">
+      <thead >
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of allUsers">
+          <th scope="row" class="tabletext">{{user.username}}</th>
+          <td>
+            <button type="button" (click)="addUserToChannel(user._id);show = !show" class="btn btn-primary btn-sm">Add</button>
+             &nbsp;
+            <button type="button" (click)="removeUserFromChannel(user._id);show = !show" class="btn btn-primary btn-sm">Remove</button>
+          </td>
+      </tbody>
+    </table>
   </form>
 </div>
-<div id="removeUser">
-  <form *ngIf="removeUser" id="removeUser">
-    <label for="removeUser" class="lbl">User to Remove: </label>
-    <input type="username" [(ngModel)]="userToRemove" name="removeUser" id="removeUser" autofocus required />
-    <button type="button" (click)="removeUserFromChannel()" id="savebutton" class="btn btn-dark"
-      style="margin-top: 20px;">Remove User</button>
-  </form>
-</div>
+
+<ol id="chatmessages" class="chatmessages">
+  <div class="sender">{{ user.username }}</div>
+  <li>Test Chat Item</li>
+</ol>
   
   <div class="messageForm">
     <form id="messageform">

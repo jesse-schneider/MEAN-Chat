@@ -6,15 +6,17 @@ var ObjectID = require('mongodb').ObjectID;
 exports.addUserToChannel = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("meanchat");
-    db.collection("channels", (err, collection) => {
-      var channel = req.body;
-      var channelID = new ObjectID(channel.id);
-      collection.updateOne({ _id: channelID }, {
-        $push: {
-          users: channel.newUser
-        }
+    var request = req.body;
+    console.log(request);
+    var user = new ObjectID(request.user);
+    db.collection("users", (err, collection) => {
+      
+      collection.updateOne({ _id: user }, {
+         $push: {
+          groupChannels: request.channel
+         }
       }, (err, result) => {
-        console.log("for the documents with", channelID);
+        console.log("for the documents with", user);
         res.send(result);
         client.close();
       });
@@ -25,15 +27,16 @@ exports.addUserToChannel = function (req, res) {
 exports.removeUserFromChannel = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("meanchat");
-    db.collection("channels", (err, collection) => {
-      var channel = req.body;
-      var channelID = new ObjectID(channel.id);
-      collection.updateOne({ _id: channelID }, {
+    var channel = req.body;
+    var userID = new ObjectID(channel.user);
+    console.log(channel);
+    db.collection("users", (err, collection) => {
+      collection.updateOne({ _id: userID }, {
         $pull: {
-          users: channel.userToRemove
+          groupChannels: channel.channel
         }
       }, (err, result) => {
-        console.log("for the documents with", channelID);
+        console.log("for the documents with", userID);
         res.send(result);
         client.close();
       });

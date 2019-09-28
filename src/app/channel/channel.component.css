@@ -90,3 +90,24 @@ form input {
 #removeUser {
   text-align: center;
 }
+
+
+.chatmessages {
+  list-style: none;
+  flex-grow:1;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling:touch;
+  padding:10px
+}
+
+.sender {
+  display:flex;
+  margin-bottom:5px;
+  font-weight:600;
+  margin-right:10px
+}
+
+.tabletext {
+  font-family: 'Montserrat', sans-serif;
+  font: normal;
+}

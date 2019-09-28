@@ -1,6 +1,5 @@
 <h5 class="welcome" *ngIf="loggedIn">Welcome, {{ user.username }}</h5>
 <button *ngIf="admin" (click)="showCreateGroup()" class="btn btn-primary" id="startButton">Create new Group</button>
-<button *ngIf="admin" (click)="showRemoveGroup()" class="btn btn-danger" id="endButton">Remove Group</button>
 <div class="newGroupForm">
 <form *ngIf="createGroup" id="createGroup">
   <label for="newGroup" class="lbl">New Group Name: </label>
@@ -19,10 +18,11 @@
 
 <h3 class="welcome">Groups</h3>
 <div *ngIf="loggedIn">
-<ul *ngFor="let i of user.groupList" class="grouplist list-group-item list-group-item-info">
-  
+<ul *ngFor="let i of user.groupList" class="grouplist list-group-item">
     <div class="group-item">
-      <a href="group" (click)="selectGroup(i)"><i class="fas fa-server icon"></i><li>{{ i }}</li></a>
+      <a href="group" (click)="selectGroup(i)"><i class="fas fa-server icon"></i>
+      <li>{{ i }}</li></a>
     </div>
+    <button *ngIf="admin" (click)="remove(i)" class="btn btn-danger removeButton">Remove</button>
 </ul>
 </div>

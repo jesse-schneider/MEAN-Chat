@@ -49,3 +49,17 @@ exports.authenticate = function (req, res) {
     });
   });
 };
+
+//authentication function -> find requested user and return, or else return error
+exports.allUsers = function (req, res) {
+  MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+    if (err) throw err;
+    var db = client.db("meanchat");
+    db.collection("users").find({}).toArray((err, users) => {
+      if (err) throw err;
+      res.send(users);
+      client.close();
+    });
+  });
+};
+
