@@ -25,10 +25,39 @@
   </form>
 </div>
 
-<ol id="chatmessages" class="chatmessages">
+<div class="chat">
+
+<ol id="chatmessages"  class="chatmessages">
+  <div class="messageRight" >
+  <li class="messageLi">
+    <div class="messageContent">
+    <img class="avatar" [src]="linkImg(this.pictureURL)" />
+    <div class="sender">{{ user.username }}</div>
+    <div class="content">Test Chat Item</div>
+    </div>
+</li>
+</div>
+<div class="messageRight">
+<li class="messageLi">
+  <div class="messageContent">
+  <img class="avatar" [src]="linkImg(this.pictureURL)" />
   <div class="sender">{{ user.username }}</div>
-  <li>Test Chat Item</li>
+  <div class="content">Test Chat Item2</div>
+  </div>
+</li>
+</div>
+<div class="messageLeft">
+  <li class="messageLi">
+    <div class="messageContent">
+      <img class="avatar" [src]="linkImg(this.pictureURL)" />
+      <div class="sender">{{ user.username }}</div>
+      <div class="content">Test Chat Item2</div>
+    </div>
+  </li>
+</div>
+
 </ol>
+</div>
   
   <div class="messageForm">
     <form id="messageform">

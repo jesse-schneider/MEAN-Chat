@@ -15,10 +15,12 @@ export class ChannelComponent implements OnInit {
   @Input() channel = "";
   userList = [];
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
+  pictureURL = "";
   group = sessionStorage.getItem('Group');
   allUsers:any = [];
   channelList = [];
   messages = [];
+  
 
   userManagement = false;
 
@@ -46,6 +48,15 @@ export class ChannelComponent implements OnInit {
     this.authService.getAllUsers().subscribe((response) => {
       this.allUsers = response;
       console.log(this.allUsers);
+    });
+
+    var post = {
+      user: this.user._id
+    };
+    let data = JSON.stringify(post);
+    this.authService.getImage(data).subscribe((response) => {
+      this.pictureURL = response["picture"];
+      console.log(this.pictureURL);
     });
   }
 
@@ -86,6 +97,10 @@ export class ChannelComponent implements OnInit {
       console.log('error: ', error);
     });
     this.showUsers();
+  }
+
+  linkImg(fileName) {
+    return `http://localhost:3000/${fileName}`;
   }
 
 }

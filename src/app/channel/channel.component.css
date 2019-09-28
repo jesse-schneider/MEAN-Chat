@@ -111,3 +111,70 @@ form input {
   font-family: 'Montserrat', sans-serif;
   font: normal;
 }
+
+
+
+.chat {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background: #eee;
+}
+
+.messageRight, .messageLeft {
+	position: relative;
+	background: #00aabb;
+  border-radius: 0.8em;
+  margin-top: 10px;
+  width: 900px;
+}
+.messageRight:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-right-color: #00aabb;
+  border-left: 0;
+  border-bottom: 0;
+  margin-top: -10px;
+  margin-left: -20px;
+}
+
+.messageLeft:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-left-color: #00aabb;
+  border-right: 0;
+  border-bottom: 0;
+  margin-top: -10px;
+  margin-right: -20px;
+}
+
+
+.messageContent {
+  display: inline-flex;
+}
+
+.sender, .content {
+  margin-top: 5px;
+}
+
+
+.avatar {
+  width:75px;
+  border:3px solid #fff;
+  margin:25px;
+  border-radius:50%;
+}
+
+
