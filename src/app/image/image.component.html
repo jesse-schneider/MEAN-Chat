@@ -2,7 +2,7 @@
 <h1>Profile Picture</h1>
 <p>Current Selected Photo: </p>
 <div class="profile-img">
-<img [src]="this.pictureURL" />
+<img [src]="linkImg(this.pictureURL)" />
 </div>
 <input id="photo" type="file" />
 <button type="button" class="btn btn-success btn-s" (click)="upload()">Upload</button>

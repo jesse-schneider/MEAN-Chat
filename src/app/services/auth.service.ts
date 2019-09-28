@@ -29,7 +29,11 @@ export class AuthService {
   }
 
   uploadImage(data) {
-    return this.http.post('http://localhost:3000/api/uploadimage', data, httpOptions);
+    return this.http.post('http://localhost:3000/api/uploadimage', data);
+  }
+
+  getImage(data) {
+    return this.http.post('http://localhost:3000/api/getuserimage', data, httpOptions);
   }
 
 }

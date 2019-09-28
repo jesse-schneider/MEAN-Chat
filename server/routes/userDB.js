@@ -2,6 +2,7 @@ var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 var ObjectID = require('mongodb').ObjectID;
 const multer = require('multer');
+const path = require('path');
 
 //add a user from a JSON Object
 exports.addUser = function (req, res) {
@@ -67,7 +68,7 @@ exports.uploadImage = function (req, res) {
 
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './../src/assets/img/')
+      cb(null, './img/')
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + '.png') 
@@ -103,3 +104,19 @@ exports.uploadImage = function (req, res) {
         });
     });
   };
+
+exports.getImage = function(req, res) {
+  let user = new ObjectID(req.body.user);
+  console.log(req.body);
+  MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+    let db = client.db("meanchat");
+    db.collection("users", (err, collection) => {
+        collection.findOne({  _id: user }, (err, document) => {
+          var str = document.profilePicLocation.split('\\');
+          var URL = str[1];
+          return res.send({picture: URL});
+        });
+        client.close();
+      });
+    });
+};

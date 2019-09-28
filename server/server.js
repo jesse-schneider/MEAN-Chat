@@ -2,12 +2,16 @@
 var express = require('express');
 const bodyparser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 //app middleware
 var app = express();
 app.use(cors());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
+
+var dir = path.join(__dirname, 'img');
+app.use(express.static(dir));
 
 //importing/requiring all the db operation api routes
 var userDB = require('./routes/userDB.js');
@@ -21,6 +25,7 @@ app.post('/api/removeuser', userDB.removeUser);
 app.post('/api/auth', userDB.authenticate);
 app.get('/api/getallusers', userDB.allUsers);
 app.post('/api/uploadimage', userDB.uploadImage);
+app.post('/api/getuserimage', userDB.getImage);
 
 //group db operation routes
 app.post('/api/addgroup', groupDB.addGroup);
