@@ -10,6 +10,9 @@ import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { GroupComponent } from './group/group.component';
 import { ChannelComponent } from './channel/channel.component';
+import { ImageComponent } from './image/image.component';
+
+import { FileSelectDirective } from 'ng2-file-upload';
 
 
 @NgModule({
@@ -19,7 +22,9 @@ import { ChannelComponent } from './channel/channel.component';
     NavComponent,
     HomeComponent,
     GroupComponent,
-    ChannelComponent
+    ChannelComponent,
+    ImageComponent,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule,

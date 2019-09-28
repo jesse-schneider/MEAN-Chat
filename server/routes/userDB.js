@@ -1,6 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 var ObjectID = require('mongodb').ObjectID;
+const multer = require('multer');
 
 //add a user from a JSON Object
 exports.addUser = function (req, res) {
@@ -36,7 +37,6 @@ exports.removeUser = function (req, res) {
 //authentication function -> find requested user and return, or else return error
 exports.authenticate = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-    if (err) throw err;
     var db = client.db("meanchat");
     var query = {
       username: req.body.username,
@@ -63,3 +63,13 @@ exports.allUsers = function (req, res) {
   });
 };
 
+exports.uploadImage = function (req, res) {
+  var DIR = __dirname + '/img/';
+  var upload = multer({ dest: DIR }).single('photo');
+  var path = '';
+  //grab incoming user details ready to store in mongoDB
+    upload(req, res, function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(422).send("an Error occured")
+      }

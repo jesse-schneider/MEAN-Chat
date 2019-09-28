@@ -6,8 +6,8 @@ const cors = require('cors');
 //app middleware
 var app = express();
 app.use(cors());
-app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.json());
 
 //importing/requiring all the db operation api routes
 var userDB = require('./routes/userDB.js');
@@ -20,6 +20,7 @@ app.post('/api/adduser', userDB.addUser);
 app.post('/api/removeuser', userDB.removeUser);
 app.post('/api/auth', userDB.authenticate);
 app.get('/api/getallusers', userDB.allUsers);
+app.post('/api/uploadimage', userDB.uploadImage);
 
 //group db operation routes
 app.post('/api/addgroup', groupDB.addGroup);

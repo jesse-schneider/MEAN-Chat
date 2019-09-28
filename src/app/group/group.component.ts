@@ -36,15 +36,15 @@ export class GroupComponent implements OnInit {
 
   ngOnInit() {
     //on init, check user roles, and grab user's channels to put into channels list array
-    if (this.user.ofGroupAdminRole == true) {
+    if (this.user.ofGroupAdminRole === true) {
       this.admin = !this.admin;
     }
-    if(this.user.username== 'super') {
+    if(this.user.username === 'super') {
       this.sadmin = !this.sadmin;
       this.assis = !this.assis;
     }
 
-    if(this.user.ofGroupAsissRole == true) {
+    if(this.user.ofGroupAsissRole === true) {
       this.assis = !this.assis;
     }
 
