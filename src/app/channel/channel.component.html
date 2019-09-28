@@ -27,42 +27,25 @@
 
 <div class="chat">
 
-<ol id="chatmessages"  class="chatmessages">
-  <div class="messageRight" >
-  <li class="messageLi">
+<ol id="chatmessages" *ngFor="let message of messages" class="chatmessages">
+  <div class="message">
+  <li>
     <div class="messageContent">
     <img class="avatar" [src]="linkImg(this.pictureURL)" />
-    <div class="sender">{{ user.username }}</div>
-    <div class="content">Test Chat Item</div>
+    <div class="sender">{{ message.creatorName }}</div>
+    <div class="content">{{ message.content }}</div> &nbsp;
+    <div class="content">{{ message.createdAt }}</div>
     </div>
 </li>
 </div>
-<div class="messageRight">
-<li class="messageLi">
-  <div class="messageContent">
-  <img class="avatar" [src]="linkImg(this.pictureURL)" />
-  <div class="sender">{{ user.username }}</div>
-  <div class="content">Test Chat Item2</div>
-  </div>
-</li>
-</div>
-<div class="messageLeft">
-  <li class="messageLi">
-    <div class="messageContent">
-      <img class="avatar" [src]="linkImg(this.pictureURL)" />
-      <div class="sender">{{ user.username }}</div>
-      <div class="content">Test Chat Item2</div>
-    </div>
-  </li>
-</div>
-
 </ol>
 </div>
   
   <div class="messageForm">
     <form id="messageform">
-      <input name="message" type="text" placeholder="Type Message here..." autofocus autocomplete="off" />
-      <button class="btn btn-primary">Send</button>
+      <input name="message" type="text" [(ngModel)]="messageContent" placeholder="Type Message here..." autofocus
+        autocomplete="off" />
+      <button class="btn btn-primary" (click)="chat(messageContent)">Send</button>
     </form>
   </div>
 

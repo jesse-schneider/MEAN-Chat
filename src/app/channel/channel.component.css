@@ -123,42 +123,7 @@ form input {
   background: #eee;
 }
 
-.messageRight, .messageLeft {
-	position: relative;
-	background: #00aabb;
-  border-radius: 0.8em;
-  margin-top: 10px;
-  width: 900px;
-}
-.messageRight:after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 0;
-  height: 0;
-  border: 20px solid transparent;
-  border-right-color: #00aabb;
-  border-left: 0;
-  border-bottom: 0;
-  margin-top: -10px;
-  margin-left: -20px;
-}
 
-.messageLeft:after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 50%;
-  width: 0;
-  height: 0;
-  border: 20px solid transparent;
-  border-left-color: #00aabb;
-  border-right: 0;
-  border-bottom: 0;
-  margin-top: -10px;
-  margin-right: -20px;
-}
 
 
 .messageContent {
@@ -166,14 +131,14 @@ form input {
 }
 
 .sender, .content {
-  margin-top: 5px;
+  margin-top: 15px;
 }
 
 
 .avatar {
-  width:75px;
+  width:50px;
   border:3px solid #fff;
-  margin:25px;
+  margin:10px;
   border-radius:50%;
 }
 

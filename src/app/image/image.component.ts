@@ -11,7 +11,7 @@ const URL = 'http://localhost:3000/api/uploadimage';
   styleUrls: ['./image.component.css']
 })
 export class ImageComponent implements OnInit {
-  //create new fileUploader 
+  //create new fileUploader object
   public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'photo' });
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   picture:any = "";
@@ -29,7 +29,6 @@ export class ImageComponent implements OnInit {
     let data = JSON.stringify(post);
     this.authService.getImage(data).subscribe((response) => {
       this.pictureURL = response["picture"];
-      console.log(this.pictureURL);
     });
 }
 
@@ -42,13 +41,9 @@ export class ImageComponent implements OnInit {
       formData.append('photo', inputEl.files.item(0));
 
       this.authService.uploadImage(formData).subscribe((response) => {
-        console.log(response);
         sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
-        var str = this.user.profilePicLocation.split('\\');
-        this.picture = str[4];
-        this.pictureURL = `assets/img/${this.picture}`;
         alert("success");
-        window.location.replace('image');
+        this.ngOnInit();
       });
     }
   }

@@ -59,7 +59,6 @@ export class GroupComponent implements OnInit {
 
     this.authService.getAllUsers().subscribe((response) => {
       this.allUsers = response;
-      console.log(this.allUsers);
     });
   }
 

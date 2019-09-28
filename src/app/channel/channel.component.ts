@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GroupService } from './../services/group.service';
 import { AuthService } from '../services/auth.service';
+import { SocketService } from './../services/socket.service';
 
 @Component({
   selector: 'app-channel',
@@ -19,15 +20,19 @@ export class ChannelComponent implements OnInit {
   group = sessionStorage.getItem('Group');
   allUsers:any = [];
   channelList = [];
+
+  messageContent="";
   messages = [];
+  ioConnection: any;
   
 
   userManagement = false;
 
 
-  constructor(private groupService: GroupService, private authService: AuthService) { }
+  constructor(private groupService: GroupService, private authService: AuthService, private socketService: SocketService) { }
 
   ngOnInit() {
+    this.initIoConnection();
     let storageJson = sessionStorage.getItem('Users');
     this.userList = JSON.parse(storageJson);
 
@@ -47,7 +52,6 @@ export class ChannelComponent implements OnInit {
     this.channel = JSON.parse(sessionStorage.getItem('Channel'));
     this.authService.getAllUsers().subscribe((response) => {
       this.allUsers = response;
-      console.log(this.allUsers);
     });
 
     var post = {
@@ -56,7 +60,6 @@ export class ChannelComponent implements OnInit {
     let data = JSON.stringify(post);
     this.authService.getImage(data).subscribe((response) => {
       this.pictureURL = response["picture"];
-      console.log(this.pictureURL);
     });
   }
 
@@ -97,6 +100,34 @@ export class ChannelComponent implements OnInit {
       console.log('error: ', error);
     });
     this.showUsers();
+  }
+
+  private initIoConnection() {
+    this.socketService.initSocket();
+    this.ioConnection = this.socketService.onMessage().subscribe((message: string) => {
+        this.messages.push(message);
+      });
+    this.ioConnection = this.socketService.onJoin().subscribe((message: object) => {
+      this.messages.push(message);
+    });
+  }
+
+  private chat() {
+    if (this.messageContent) {
+      //check if there is a message to send
+      var d = new Date();
+      var b = d.toLocaleTimeString();
+      let message = {
+        creator: this.user._id,
+        creatorName: this.user.username,
+        content: this.messageContent,
+        createdAt: b
+      }
+      this.socketService.send(message);
+      this.messageContent = null;
+    } else {
+      console.log("no message to send");
+    }
   }
 
   linkImg(fileName) {
