@@ -46,15 +46,6 @@ app.post('/api/removeuserchannel', usersChannels.removeUserFromChannel);
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const PORT = 3000;
-let users = [];
-let channels =[];
-
-MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-  var db = client.db("meanchat");
-  users = db.collection("users");
-  channels = db.collection("channels");
-
-})
 
 //on connection, show connection, on message emit message
 io.on('connection', (socket) => {

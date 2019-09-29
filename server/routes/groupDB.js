@@ -9,7 +9,6 @@ exports.addGroup = function (req, res) {
     let db = client.db("meanchat");
     db.collection("users", (err, collection) => {
       var group = req.body;
-      console.log(group);
       var userID = new ObjectID(group.id);
       collection.updateOne({ _id: userID }, {
         $push: {
@@ -58,9 +57,7 @@ exports.getGroups = function (req, res) {
     var db = client.db("meanchat");
     var user = req.body;
     var userID = new ObjectID(user.id);
-    console.log(req.body);
     db.collection("users").find({ _id: userID }).toArray((err, groups) => {
-      console.log(groups);
       if (err) throw err;
       res.send(groups[0].groupList);
       client.close();

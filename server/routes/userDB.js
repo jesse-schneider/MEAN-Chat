@@ -9,7 +9,7 @@ exports.addUser = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     if (err) throw err;
     var db = client.db("meanchat");
-    var user = req.body
+    var user = req.body;
     db.collection("users").insertOne(user, function (err, result) {
       console.log("Created user:");
       console.log(user);
@@ -65,21 +65,20 @@ exports.allUsers = function (req, res) {
 };
 
 //upload image to user
-exports.uploadImage = function (req, res) {
+exports.uploadImage = (req, res) => {
   var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination (req, file, cb) {
       cb(null, './img/')
     },
-    filename: function (req, file, cb) {
-      console.log(file.mimetype);
+    filename (req, file, cb) {
       let extArray = file.mimetype.split("/");
       let extension = extArray[extArray.length - 1];
-      cb(null, Date.now() + extension) 
+      cb(null, Date.now() + extension);
     }
-  })
+  });
   
   var upload = multer({ storage: storage }).single('photo');
-  var path = '';
+  var path = "";
 
     upload(req, res, (err) => {
       var user = new ObjectID(req.body.user);

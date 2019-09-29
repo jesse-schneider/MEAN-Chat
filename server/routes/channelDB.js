@@ -10,7 +10,6 @@ exports.addChannel = function (req, res) {
     var channel = req.body;
     var userID = new ObjectID(channel.user);
     db.collection("channels").insertOne(channel, function (err, result) {
-      console.log("Created the following channel:");
           db.collection("users", (err, collection) => {
             collection.updateOne({ _id: userID }, {
               $push: {
@@ -38,11 +37,9 @@ exports.removeChannel = function (req, res) {
     let groupChannel = str[1];
     let a = str[0];
     let query = { group: a, channel:groupChannel };
-    console.log(query);
     db.collection("channels", (err, collection) => {
       collection.deleteOne(query, (err, result) => {
         console.log("Removed the channel with ID: ", query);
-
         db.collection("users", (err, collection) => {
           collection.updateOne({ _id: userID }, { 
             $pull: {
@@ -61,4 +58,4 @@ exports.removeChannel = function (req, res) {
       });
     });
   });
-}
+};

@@ -7,10 +7,8 @@ exports.addUserToChannel = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("meanchat");
     var request = req.body;
-    console.log(request);
     var user = new ObjectID(request.user);
     db.collection("users", (err, collection) => {
-      
       collection.updateOne({ _id: user }, {
          $push: {
           groupChannels: request.channel
@@ -29,7 +27,6 @@ exports.removeUserFromChannel = function (req, res) {
     let db = client.db("meanchat");
     var channel = req.body;
     var userID = new ObjectID(channel.user);
-    console.log(channel);
     db.collection("users", (err, collection) => {
       collection.updateOne({ _id: userID }, {
         $pull: {
