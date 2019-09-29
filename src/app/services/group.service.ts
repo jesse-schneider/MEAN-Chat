@@ -28,9 +28,16 @@ export class GroupService {
   getChannels(data) {
     return this.http.post('http://localhost:3000/api/channel', data, httpOptions);
   }
+  getOneChannel(data) {
+    return this.http.post('http://localhost:3000/api/getchannel', data, httpOptions);
+  }
 
   removeChannel(data) {
     return this.http.post('http://localhost:3000/api/removechannel', data, httpOptions);
+  }
+
+  updateChannel(data) {
+    return this.http.post('http://localhost:3000/api/updatechannel', data, httpOptions);
   }
 
   addUtoChannel(data) {

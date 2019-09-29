@@ -29,7 +29,6 @@ exports.addChannel = function (req, res) {
 
 exports.removeChannel = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
-    console.log(req.body);
     let db = client.db("meanchat");
     let userID = ObjectID(req.body.user);
     let channel = req.body;
@@ -55,6 +54,41 @@ exports.removeChannel = function (req, res) {
             });
           });
         });
+      });
+    });
+  });
+};
+
+exports.getChannel = function (req, res) {
+  MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+    var db = client.db("meanchat");
+    let channelObj = req.body.channel;
+    let str = channelObj.split('-');
+    let groupChannel = str[1];
+    let group = str[0];
+    var query = { channel: String(groupChannel) };
+    db.collection("channels").find(query).toArray((err, result) => {
+      if (err) throw err;
+      res.send(result[0]);
+      client.close();
+    });
+  });
+}
+
+exports.updateChannel = function (req, res) {
+  MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+    let db = client.db("meanchat");
+    console.log(req.body);
+    let channel = req.body;
+    let channelID = new ObjectID(channel.id);
+    db.collection("channels", (err, collection) => {
+      collection.updateOne({ _id: channelID }, {
+        $push: {
+          messages: channel.message
+        }
+      }, (err, result) => {
+        console.log("For document containing: ", channelID);
+        client.close();
       });
     });
   });

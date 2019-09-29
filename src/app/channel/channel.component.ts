@@ -15,6 +15,7 @@ export class ChannelComponent implements OnInit {
   admin = false;
   sadmin = false;
   @Input() channel = JSON.parse(sessionStorage.getItem('Channel'));
+  channelObj = {};
   userList = [];
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   pictureURL = "";
@@ -26,6 +27,7 @@ export class ChannelComponent implements OnInit {
   messages = [];
   ioConnection: any;
   imgMessage:any = "";
+  ISent = false;
   
   userManagement = false;
   imageChat = false;
@@ -34,7 +36,6 @@ export class ChannelComponent implements OnInit {
   constructor(private groupService: GroupService, private authService: AuthService, private socketService: SocketService) { }
 
   ngOnInit() {
-    
     let storageJson = sessionStorage.getItem('Users');
     this.userList = JSON.parse(storageJson);
 
@@ -56,13 +57,19 @@ export class ChannelComponent implements OnInit {
       this.allUsers = response;
     });
 
-    var post = {
-      user: this.user._id
-    };
+    var post = { user: this.user._id };
+
     let data = JSON.stringify(post);
     this.authService.getImage(data).subscribe((response) => {
       this.pictureURL = response["picture"];
     });
+    console.log(this.messages);
+    this.channelObj = JSON.parse(sessionStorage.getItem('ChannelObj'));
+    setTimeout(() => {
+      console.log("timeout");
+      this.messages = this.channelObj["messages"];
+    }, 5000);
+    
     this.initIoConnection();
   }
 
@@ -107,14 +114,40 @@ export class ChannelComponent implements OnInit {
 
   private initIoConnection() {
     this.socketService.initSocket();
-    this.ioConnection = this.socketService.onMessage().subscribe((message: string) => {
+    this.ioConnection = this.socketService.onMessage().subscribe((message: object) => {
         this.messages.push(message);
+
+        if(this.ISent) {
+          let updatedChan = {
+            id: this.channelObj._id,
+            message: message
+          };
+
+          this.groupService.updateChannel(JSON.stringify(updatedChan)).subscribe((response) => {
+            console.log(response);
+          });
+        }
+        this.ISent = false;
       });
+
     this.ioConnection = this.socketService.onJoin().subscribe((message: object) => {
       this.messages.push(message);
     });
+
     this.ioConnection = this.socketService.onImage().subscribe((image: object) => {
       this.messages.push(image);
+
+      if(this.ISent) {
+      let updatedChan = {
+        id: this.channelObj._id,
+        message: image
+      };
+      this.groupService.updateChannel(JSON.stringify(updatedChan)).subscribe((response) => {
+        console.log(response);
+      });
+    }
+    this.ISent = false;
+
     });
   }
 
@@ -133,13 +166,14 @@ export class ChannelComponent implements OnInit {
         channel: this.channel
       }
       this.socketService.send(message);
+      this.ISent = true;
       this.messageContent = null;
     } else {
       console.log("no message to send");
     }
   }
 
-  
+
   //function to call api for profile images
   linkImg(fileName) {
     return `http://localhost:3000/${fileName}`;
@@ -171,6 +205,7 @@ export class ChannelComponent implements OnInit {
           channel: this.channel
         }
         this.socketService.sendImage(data);
+        this.ISent = true;
         this.imgMessage = null;
       });
     }

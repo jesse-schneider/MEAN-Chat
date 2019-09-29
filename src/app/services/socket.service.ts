@@ -16,7 +16,6 @@ export class SocketService {
   }
 
   public joinChannel(data: object) {
-    console.log(data);
     this.socket.emit('join', data);
   }
 
@@ -44,7 +43,7 @@ export class SocketService {
 
   public onJoin(): Observable<any> {
     let observable = new Observable(observer => {
-      this.socket.on('join', (data: string) => observer.next(data))
+      this.socket.on('join', (data: object) => observer.next(data))
     });
     return observable;
   }

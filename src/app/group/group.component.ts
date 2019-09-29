@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './../services/auth.service';
 import { GroupService } from './../services/group.service';
 import { SocketService } from './../services/socket.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.css']
 })
-export class GroupComponent implements OnInit {
+export class GroupComponent implements OnInit, OnDestroy {
 
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   group = sessionStorage.getItem('Group');
@@ -23,6 +24,7 @@ export class GroupComponent implements OnInit {
   admin = false;
   sadmin = false;
   assis = false;
+  channelObj = {};
 
   uusername = "";
   uemail = "";
@@ -32,8 +34,30 @@ export class GroupComponent implements OnInit {
   ugroupList = [];
   ugroupChannels = [];
   uadminGroupList = [];
+  navigationSubscription;
 
-  constructor(private authService: AuthService, private groupService: GroupService, private socketService: SocketService) { }
+  constructor(private authService: AuthService, private groupService: GroupService, private socketService: SocketService, private router: Router) {
+    // subscribe to the router events - storing the subscription so
+    // we can unsubscribe later. 
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.initialiseInvites();
+      }
+    });
+   }
+
+  initialiseInvites() {
+    // Set default values and re-fetch any data you need.
+  }
+  ngOnDestroy() {
+    // avoid memory leaks here by cleaning up after ourselves. If we  
+    // don't then we will continue to run our initialiseInvites()   
+    // method on every navigationEnd event.
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
 
   ngOnInit() {
     //on init, check user roles, and grab user's channels to put into channels list array
@@ -64,6 +88,12 @@ export class GroupComponent implements OnInit {
 
     this.channel = this.channelList[0];
     sessionStorage.setItem('Channel', JSON.stringify(this.channel));
+
+    var channelPost = { channel: this.channel };
+    this.groupService.getOneChannel(JSON.stringify(channelPost)).subscribe((response) => {
+      this.channelObj = response;
+      sessionStorage.setItem('ChannelObj', JSON.stringify(this.channelObj));
+    });
   }
 
   showCreateChannel() {
@@ -172,7 +202,18 @@ export class GroupComponent implements OnInit {
   selectChannel(i) {
     this.channel = i;
     sessionStorage.setItem('Channel', JSON.stringify(this.channel));
-    this.socketService.joinChannel({ user: this.user.username, channel: this.channel });
+    var channelPost = { channel: this.channel };
+
+    this.groupService.getOneChannel(JSON.stringify(channelPost)).subscribe((response) => {
+      this.channelObj = response;
+      sessionStorage.setItem('ChannelObj', JSON.stringify(this.channelObj));
+      console.log({ user: this.user.username, channel: this.channel });
+
+      this.socketService.joinChannel({ user: this.user.username, channel: this.channel });
+      this.router.navigateByUrl('group');
+    });
+
+    
 
   }
 

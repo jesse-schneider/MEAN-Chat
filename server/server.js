@@ -3,8 +3,6 @@ var express = require('express');
 const bodyparser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
 
 //app middleware
 var app = express();
@@ -37,6 +35,8 @@ app.post('/api/getgroups', groupDB.getGroups);
 //channel db operation routes
 app.post('/api/addchannel', channelDB.addChannel);
 app.post('/api/removechannel', channelDB.removeChannel);
+app.post('/api/getchannel', channelDB.getChannel);
+app.post('/api/updatechannel', channelDB.updateChannel);
 
 //add/remove user to/from channel routes
 app.post('/api/adduserchannel', usersChannels.addUserToChannel);
@@ -54,7 +54,7 @@ io.on('connection', (socket) => {
   socket.on('join', (data) => {
     socket.join(data.channel);
     socket.emit('join', { creatorName: 'Admin:', creatorImg: "default-avatar.jpg", content: " You joined the channel." });
-  } );
+  });
 
   //emit message to correct sockets 
   socket.on('message', (data) => {
