@@ -32,7 +32,7 @@ exports.removeGroup = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("meanchat");
     var groupToRemove = req.body.group;
-    var userID = ObjectID(req.body.id);
+    var userID = new ObjectID(req.body.id);
     db.collection("users", (err, collection) => {
       collection.updateMany({}, {
         $pull: {

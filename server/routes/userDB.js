@@ -68,7 +68,7 @@ exports.allUsers = function (req, res) {
 exports.uploadImage = (req, res) => {
   var storage = multer.diskStorage({
     destination (req, file, cb) {
-      cb(null, './img/')
+      cb(null, './img/');
     },
     filename (req, file, cb) {
       let extArray = file.mimetype.split("/");
@@ -77,7 +77,7 @@ exports.uploadImage = (req, res) => {
     }
   });
   
-  var upload = multer({ storage: storage }).single('photo');
+  var upload = multer({ storage }).single('photo');
   var path = "";
 
     upload(req, res, (err) => {
@@ -110,7 +110,6 @@ exports.uploadImage = (req, res) => {
   //get image name from server
 exports.getImage = function(req, res) {
   let user = new ObjectID(req.body.user);
-  console.log(req.body);
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("meanchat");
     db.collection("users", (err, collection) => {
