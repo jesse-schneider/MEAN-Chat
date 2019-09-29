@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit  } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, SimpleChange, SimpleChanges  } from '@angular/core';
 import { GroupService } from './../services/group.service';
 import { AuthService } from '../services/auth.service';
 import { SocketService } from './../services/socket.service';
@@ -15,7 +15,6 @@ export class ChannelComponent implements OnInit {
   sadmin = false;
   @Input() channel = JSON.parse(sessionStorage.getItem('Channel'));
   @Input() channelObj = {};
-  userList = [];
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   pictureURL = "";
   group = sessionStorage.getItem('Group');
@@ -65,7 +64,8 @@ export class ChannelComponent implements OnInit {
     this.initIoConnection();
   }
 
-  ngAfterViewInit() {
+  ngDoCheck() {
+    if(this.messages)
     this.container = document.getElementById("chat");
     this.container.scrollTop = this.container.scrollHeight;
   } 
@@ -112,7 +112,6 @@ export class ChannelComponent implements OnInit {
   private initIoConnection() {
     this.ioConnection = this.socketService.onMessage().subscribe((message: object) => {
         this.messages.push(message);
-        this.ngAfterViewInit();
 
         if(this.ISent) {
           let updatedChan = { id: this.channelObj["_id"], message: message };
@@ -123,12 +122,10 @@ export class ChannelComponent implements OnInit {
 
     this.ioConnection = this.socketService.onJoin().subscribe((message: object) => {
       this.messages.push(message);
-      this.ngAfterViewInit();
     });
 
     this.ioConnection = this.socketService.onImage().subscribe((image: object) => {
       this.messages.push(image);
-      this.ngAfterViewInit();
 
       if(this.ISent) {
       let updatedChan = { id: this.channelObj["_id"], message: image };
