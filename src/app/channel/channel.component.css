@@ -136,10 +136,29 @@ form input {
 
 
 .avatar {
-  width:50px;
+  max-width:50px;
+  max-height:50px;
   border:3px solid #fff;
   margin:10px;
   border-radius:50%;
 }
 
 
+label {
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  margin: auto;
+  /* Style as you please, it will become the visible UI component. */
+}
+
+#photo {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.chatImage {
+  width: 200px;
+  height: 200px;
+}

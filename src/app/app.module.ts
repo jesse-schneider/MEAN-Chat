@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { GroupComponent } from './group/group.component';
 import { ChannelComponent } from './channel/channel.component';
 import { ImageComponent } from './image/image.component';
+import { SocketService } from './services/socket.service';
 
 import { FileSelectDirective } from 'ng2-file-upload';
 
@@ -32,7 +33,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
     FormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

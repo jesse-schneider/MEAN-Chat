@@ -15,13 +15,29 @@ export class SocketService {
     this.socket = io(SERVER_URL);
   }
 
+  public joinChannel(data: object) {
+    console.log(data);
+    this.socket.emit('join', data);
+  }
+
   public send(message: object): void {
     this.socket.emit('message', message);
+  }
+
+  public sendImage(image: object): void {
+    this.socket.emit('image', image);
   }
   
   public onMessage(): Observable<any> {
     let observable = new Observable(observer => {
       this.socket.on('message', (data: object) => observer.next(data))
+    });
+    return observable;
+  }
+
+  public onImage(): Observable<any> {
+    let observable = new Observable(observer => {
+      this.socket.on('image', (data: object) => observer.next(data))
     });
     return observable;
   }

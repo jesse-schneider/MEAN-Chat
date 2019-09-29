@@ -3,6 +3,8 @@ var express = require('express');
 const bodyparser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
 
 //app middleware
 var app = express();
@@ -44,14 +46,33 @@ app.post('/api/removeuserchannel', usersChannels.removeUserFromChannel);
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const PORT = 3000;
+let users = [];
+let channels =[];
+
+MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+  var db = client.db("meanchat");
+  users = db.collection("users");
+  channels = db.collection("channels");
+
+})
 
 //on connection, show connection, on message emit message
 io.on('connection', (socket) => {
   console.log(`User connection on port ${PORT}: ${socket.id}`);
-  socket.emit('join', { creatorName: 'Admin', content: 'New User Joined Chat.'});
-  //emit incoming message to all sockets 
-  socket.on('message', (message) => {
-    io.emit('message', message);
+
+  socket.on('join', (data) => {
+    socket.join(data.channel);
+    socket.emit('join', { creatorName: 'Admin:', creatorImg: "default-avatar.jpg", content: " You joined the channel." });
+  } );
+
+  //emit message to correct sockets 
+  socket.on('message', (data) => {
+    io.in(data.channel).emit('message', {creatorName: data.creatorName, creatorImg: data.creatorImg, content: data.content, createdAt: data.createdAt});
+  });
+
+  socket.on('image', (data) => {
+    io.in(data.channel).emit('image', { creatorName: data.creatorName, creatorImg: data.creatorImg, imgContent: data.content, createdAt: data.createdAt });
+
   });
 });
 

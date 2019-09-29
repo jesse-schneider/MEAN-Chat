@@ -31,9 +31,10 @@
   <div class="message">
   <li>
     <div class="messageContent">
-    <img class="avatar" [src]="linkImg(this.pictureURL)" />
+    <img class="avatar" [src]="linkImg(message.creatorImg)" />
     <div class="sender">{{ message.creatorName }}</div>
-    <div class="content">{{ message.content }}</div> &nbsp;
+    <div *ngIf="!message.imgContent" class="content">{{ message.content }}</div> &nbsp;
+    <img *ngIf="message.imgContent" class="chatImage" [src]="message.imgContent"/> &nbsp;
     <div class="content">{{ message.createdAt }}</div>
     </div>
 </li>
@@ -43,9 +44,11 @@
   
   <div class="messageForm">
     <form id="messageform">
-      <input name="message" type="text" [(ngModel)]="messageContent" placeholder="Type Message here..." autofocus
-        autocomplete="off" />
+      <input name="message" type="text" [(ngModel)]="messageContent" placeholder="Type Message here..." autofocus autocomplete="off" />
       <button class="btn btn-primary" (click)="chat(messageContent)">Send</button>
+      <label for="photo">Photo?</label>
+      <input id="photo" type="file" (change)="convertImageB64($event)" />
+      <button type="button" class="btn btn-success btn-s" >Send Photo</button>
     </form>
   </div>
 

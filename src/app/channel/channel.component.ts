@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { GroupService } from './../services/group.service';
 import { AuthService } from '../services/auth.service';
 import { SocketService } from './../services/socket.service';
+import { read } from 'fs';
 
 @Component({
   selector: 'app-channel',
@@ -13,7 +14,7 @@ export class ChannelComponent implements OnInit {
   assis = false;
   admin = false;
   sadmin = false;
-  @Input() channel = "";
+  @Input() channel = JSON.parse(sessionStorage.getItem('Channel'));
   userList = [];
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   pictureURL = "";
@@ -24,15 +25,16 @@ export class ChannelComponent implements OnInit {
   messageContent="";
   messages = [];
   ioConnection: any;
+  imgMessage:any = "";
   
-
   userManagement = false;
+  imageChat = false;
 
 
   constructor(private groupService: GroupService, private authService: AuthService, private socketService: SocketService) { }
 
   ngOnInit() {
-    this.initIoConnection();
+    
     let storageJson = sessionStorage.getItem('Users');
     this.userList = JSON.parse(storageJson);
 
@@ -61,6 +63,7 @@ export class ChannelComponent implements OnInit {
     this.authService.getImage(data).subscribe((response) => {
       this.pictureURL = response["picture"];
     });
+    this.initIoConnection();
   }
 
   showUsers() {
@@ -110,6 +113,9 @@ export class ChannelComponent implements OnInit {
     this.ioConnection = this.socketService.onJoin().subscribe((message: object) => {
       this.messages.push(message);
     });
+    this.ioConnection = this.socketService.onImage().subscribe((image: object) => {
+      this.messages.push(image);
+    });
   }
 
   private chat() {
@@ -117,11 +123,14 @@ export class ChannelComponent implements OnInit {
       //check if there is a message to send
       var d = new Date();
       var b = d.toLocaleTimeString();
+      //create message object to send
       let message = {
         creator: this.user._id,
         creatorName: this.user.username,
+        creatorImg: this.pictureURL,
         content: this.messageContent,
-        createdAt: b
+        createdAt: b,
+        channel: this.channel
       }
       this.socketService.send(message);
       this.messageContent = null;
@@ -130,8 +139,42 @@ export class ChannelComponent implements OnInit {
     }
   }
 
+  
+  //function to call api for profile images
   linkImg(fileName) {
     return `http://localhost:3000/${fileName}`;
+  }
+
+  //function for converting chat image to base64, to save in mongo and send in chat
+  convertImageB64(input): void {
+    //async promise for fileReader object
+    this.imageChat = !this.imageChat;
+    const reader = (file) => {
+      return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.onload = () => resolve(fileReader.result);
+      fileReader.readAsDataURL(file);
+    });
+  }
+  //promise is resolved, now do this part 
+    const readFile = (file) => {
+      reader(file).then((result) => {
+        //define image message
+        var d = new Date();
+        var b = d.toLocaleTimeString();
+        let data = {
+          creator: this.user._id,
+          creatorName: this.user.username,
+          creatorImg: this.pictureURL,
+          content: result,
+          createdAt: b,
+          channel: this.channel
+        }
+        this.socketService.sendImage(data);
+        this.imgMessage = null;
+      });
+    }
+    readFile(input.target.files[0]);
   }
 
 }

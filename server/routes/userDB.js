@@ -64,14 +64,17 @@ exports.allUsers = function (req, res) {
   });
 };
 
+//upload image to user
 exports.uploadImage = function (req, res) {
-
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './img/')
     },
     filename: function (req, file, cb) {
-      cb(null, Date.now() + '.png') 
+      console.log(file.mimetype);
+      let extArray = file.mimetype.split("/");
+      let extension = extArray[extArray.length - 1];
+      cb(null, Date.now() + extension) 
     }
   })
   
@@ -105,6 +108,7 @@ exports.uploadImage = function (req, res) {
     });
   };
 
+  //get image name from server
 exports.getImage = function(req, res) {
   let user = new ObjectID(req.body.user);
   console.log(req.body);

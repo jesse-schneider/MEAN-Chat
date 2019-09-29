@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../services/auth.service';
 import { GroupService } from './../services/group.service';
+import { SocketService } from './../services/socket.service';
 
 @Component({
   selector: 'app-group',
@@ -32,7 +33,7 @@ export class GroupComponent implements OnInit {
   ugroupChannels = [];
   uadminGroupList = [];
 
-  constructor(private authService: AuthService, private groupService: GroupService) { }
+  constructor(private authService: AuthService, private groupService: GroupService, private socketService: SocketService) { }
 
   ngOnInit() {
     //on init, check user roles, and grab user's channels to put into channels list array
@@ -60,6 +61,9 @@ export class GroupComponent implements OnInit {
     this.authService.getAllUsers().subscribe((response) => {
       this.allUsers = response;
     });
+
+    this.channel = this.channelList[0];
+    sessionStorage.setItem('Channel', JSON.stringify(this.channel));
   }
 
   showCreateChannel() {
@@ -120,7 +124,8 @@ export class GroupComponent implements OnInit {
       groupAssis: this.ugroupAssis,
       groupList: this.ugroupList,
       adminGroupList: this.uadminGroupList,
-      groupChannels: this.ugroupChannels
+      groupChannels: this.ugroupChannels,
+      profilePicLocation: "img\default-avatar.jpg"
     }
     user.groupList.push(this.group);
 
@@ -167,6 +172,7 @@ export class GroupComponent implements OnInit {
   selectChannel(i) {
     this.channel = i;
     sessionStorage.setItem('Channel', JSON.stringify(this.channel));
+    this.socketService.joinChannel({ user: this.user.username, channel: this.channel });
 
   }
 
