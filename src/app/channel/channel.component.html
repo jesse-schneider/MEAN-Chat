@@ -25,17 +25,16 @@
   </form>
 </div>
 
-<div class="chat">
-
+<div class="chat" id="chat">
 <ol id="chatmessages" *ngFor="let message of messages" class="chatmessages">
   <div class="message">
   <li>
     <div class="messageContent">
     <img class="avatar" [src]="linkImg(message.creatorImg)" />
-    <div class="sender">{{ message.creatorName }}</div>
+    <div class="sender">{{ message.creatorName }}</div> &nbsp;
+    <div class="content">{{ message.createdAt }}</div> &nbsp;
     <div *ngIf="!message.imgContent" class="content">{{ message.content }}</div> &nbsp;
     <img *ngIf="message.imgContent" class="chatImage" [src]="message.imgContent"/> &nbsp;
-    <div class="content">{{ message.createdAt }}</div>
     </div>
 </li>
 </div>

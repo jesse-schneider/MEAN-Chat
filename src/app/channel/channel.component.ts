@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit  } from '@angular/core';
 import { GroupService } from './../services/group.service';
 import { AuthService } from '../services/auth.service';
 import { SocketService } from './../services/socket.service';
-import { read } from 'fs';
 
 @Component({
   selector: 'app-channel',
@@ -15,7 +14,7 @@ export class ChannelComponent implements OnInit {
   admin = false;
   sadmin = false;
   @Input() channel = JSON.parse(sessionStorage.getItem('Channel'));
-  channelObj = {};
+  @Input() channelObj = {};
   userList = [];
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   pictureURL = "";
@@ -24,13 +23,14 @@ export class ChannelComponent implements OnInit {
   channelList = [];
 
   messageContent="";
-  messages = [];
+  @Input() messages = [];
   ioConnection: any;
   imgMessage:any = "";
   ISent = false;
   
   userManagement = false;
   imageChat = false;
+  container: HTMLElement;
 
 
   constructor(private groupService: GroupService, private authService: AuthService, private socketService: SocketService) { }
@@ -58,20 +58,17 @@ export class ChannelComponent implements OnInit {
     });
 
     var post = { user: this.user._id };
-
     let data = JSON.stringify(post);
     this.authService.getImage(data).subscribe((response) => {
       this.pictureURL = response["picture"];
     });
-    console.log(this.messages);
-    this.channelObj = JSON.parse(sessionStorage.getItem('ChannelObj'));
-    setTimeout(() => {
-      console.log("timeout");
-      this.messages = this.channelObj["messages"];
-    }, 5000);
-    
     this.initIoConnection();
   }
+
+  ngAfterViewInit() {
+    this.container = document.getElementById("chat");
+    this.container.scrollTop = this.container.scrollHeight;
+  } 
 
   showUsers() {
     //show/hide the user table
@@ -113,41 +110,31 @@ export class ChannelComponent implements OnInit {
   }
 
   private initIoConnection() {
-    this.socketService.initSocket();
     this.ioConnection = this.socketService.onMessage().subscribe((message: object) => {
         this.messages.push(message);
+        this.ngAfterViewInit();
 
         if(this.ISent) {
-          let updatedChan = {
-            id: this.channelObj._id,
-            message: message
-          };
-
-          this.groupService.updateChannel(JSON.stringify(updatedChan)).subscribe((response) => {
-            console.log(response);
-          });
+          let updatedChan = { id: this.channelObj["_id"], message: message };
+          this.groupService.updateChannel(JSON.stringify(updatedChan)).subscribe(() => {});
         }
         this.ISent = false;
       });
 
     this.ioConnection = this.socketService.onJoin().subscribe((message: object) => {
       this.messages.push(message);
+      this.ngAfterViewInit();
     });
 
     this.ioConnection = this.socketService.onImage().subscribe((image: object) => {
       this.messages.push(image);
+      this.ngAfterViewInit();
 
       if(this.ISent) {
-      let updatedChan = {
-        id: this.channelObj._id,
-        message: image
-      };
-      this.groupService.updateChannel(JSON.stringify(updatedChan)).subscribe((response) => {
-        console.log(response);
-      });
-    }
+      let updatedChan = { id: this.channelObj["_id"], message: image };
+      this.groupService.updateChannel(JSON.stringify(updatedChan)).subscribe(() => {});
+      }
     this.ISent = false;
-
     });
   }
 
@@ -172,7 +159,6 @@ export class ChannelComponent implements OnInit {
       console.log("no message to send");
     }
   }
-
 
   //function to call api for profile images
   linkImg(fileName) {
