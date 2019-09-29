@@ -35,9 +35,6 @@ export class ChannelComponent implements OnInit {
   constructor(private groupService: GroupService, private authService: AuthService, private socketService: SocketService) { }
 
   ngOnInit() {
-    let storageJson = sessionStorage.getItem('Users');
-    this.userList = JSON.parse(storageJson);
-
     if (this.user.ofGroupAdminRole == true) {
       this.admin = !this.admin;
     }
