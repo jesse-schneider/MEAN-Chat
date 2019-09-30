@@ -106,14 +106,14 @@ All server-side endpoints have a request object coming in, and a response object
 
 Route|Request|Response|Purpose
 ----|----|----|----
-`POST /api/adduser` |All fields required to create a user|The created user object|Used when a super user or GroupAdmin wishes to add a new user to the system
-`POST /api/removeuser`|Request object containing user to be removed|Response object, with removal status|remove a user from the system
-`POST /api/addgroup`|User Object including new group|Response object, with add status| add a new group to the system
-`POST /api/removegroup`|Request object containing group to be removed|Updated User Object|remove a group from the system
-`POST /api/addchannel`|Request Object containing the new channel|Updated User Object|add a new channel to the current group
-`POST /api/removechannel`|Request Object containing channel to be removed| Updated User Object|remove a channel from the current group
-`POST /api/adduserchannel`|Request Object containing the channel and the user to add|Updated User Object|add a user to the current channel
-`POST /api/removeuserchannel`|Request Object containing thechannel and the user to remove|Updated User Object|remove a user from the current channel
+`POST /api/adduser` |All fields required to create a user|The created user object|add a new user to the system
+`POST /api/removeuser`| user to be removed|Response object, with removal status|remove a user from the system
+`POST /api/addgroup`|new group|Response object, with add status| add a new group to the system
+`POST /api/removegroup`|group to be removed|Updated User Object|remove a group from the system
+`POST /api/addchannel`| the new channel|Updated User Object|add a new channel to the current group
+`POST /api/removechannel`|channel to be removed| Updated User Object|remove a channel from the current group
+`POST /api/adduserchannel`|the channel and the user to add|Updated User Object|add a user to the current channel
+`POST /api/removeuserchannel`|channel and the user to remove|Updated User Object|remove a user from the current channel
 `POST /api/auth`| Request Object of user credentials|The authenticated User Object|Used when a user wishes to gain access
 
 
