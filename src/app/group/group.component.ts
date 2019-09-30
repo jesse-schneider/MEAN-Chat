@@ -34,6 +34,7 @@ export class GroupComponent implements OnInit {
   ugroupList = [];
   ugroupChannels = [];
   uadminGroupList = [];
+  loggedIn = false;
 
   messages = [];
 
@@ -42,6 +43,13 @@ export class GroupComponent implements OnInit {
   
 
   ngOnInit() {
+
+    //on init, check for logged in user, and if found, check if they are an admin
+    if (sessionStorage.getItem('Authenticated_user') == null) {
+      return this.router.navigateByUrl('');
+    } else {
+      this.loggedIn = true;
+    }
     //on init, check user roles, and grab user's channels to put into channels list array
     if (this.user.ofGroupAdminRole === true) {
       this.admin = !this.admin;

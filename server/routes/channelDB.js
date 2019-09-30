@@ -78,7 +78,6 @@ exports.getChannel = function (req, res) {
 exports.updateChannel = function (req, res) {
   MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     let db = client.db("meanchat");
-    console.log(req.body);
     let channel = req.body;
     let channelID = new ObjectID(channel.id);
     db.collection("channels", (err, collection) => {
@@ -88,6 +87,7 @@ exports.updateChannel = function (req, res) {
         }
       }, (err, result) => {
         console.log("For document containing: ", channelID);
+        res.send({success: channelID});
         client.close();
       });
     });

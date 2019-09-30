@@ -16,11 +16,19 @@ export class ImageComponent implements OnInit {
   user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   picture:any = "";
   pictureURL:any = "";
+  loggedIn = false;
   
 
   constructor(private authService: AuthService, private http: HttpClient, private el: ElementRef, private router: Router) { }
 
   ngOnInit() {
+    //on init, check for logged in user, and if found, check if they are an admin
+    if (sessionStorage.getItem('Authenticated_user') == null) {
+      return this.router.navigateByUrl('');
+    } else {
+      this.loggedIn = true;
+    }
+
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => { console.log("ImageUpload:uploaded:", item, status, response); }
     var post = {

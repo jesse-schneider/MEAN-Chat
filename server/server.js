@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
 });
 
 //listen on http sockets.io server
-http.listen(PORT, () => {
+module.exports = http.listen(PORT, () => {
   let date = new Date();
   let hour = date.getHours();
   let minute = date.getMinutes();
