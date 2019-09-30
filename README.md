@@ -1,11 +1,13 @@
 # MEANChat
 
 ## Running the Application
-Currently, to run there is a requirement of running the frontend and backend separately. 
+Currently, to run there is a requirement of running the frontend and backend separately.
 
 To run the angular project -> run `ng serve --open` from the root directory of the project.
 
 To run the node.js backend-> run `cd server | node server.js` from the root directory of the project.
+
+## Testing
 
 ## Git Structure
 The directory of the git repository follows a standard layout, with the majority of it representing a standard angular project, and the node server and API source code found in /MEANchat/server.
@@ -104,59 +106,25 @@ All data processing has been done in the backend, the frontend simply sends a re
 ## REST API Routes
 All server-side endpoints have a request object coming in, and a response object returned.
 
-`POST /api/adduser`
+Route|Request|Response|Purpose
+----|----|----|----
+`POST /api/adduser` |All fields required to create a User|The created User|Add new User to the system
+`POST /api/removeuser`| User to be removed|Response with status|Remove User from the system
+`POST /api/auth`| Request of user credentials|The authenticated User|Used when a User wishes to gain access
+`POST /api/uploadimage`| FormData(); containing an image |Status of upload |Upload a User's image
+`POST /api/getuserimage`|User|Name of User's image file| To serve the correct image URL
+`GET /api/getallusers`| NIL|Array of Users|Get full list of Users
+`POST /api/addgroup`|New group|Status|Add new group to the system
+`POST /api/removegroup`|Group to be removed|Updated User|Remove a group from the system
+`POST /api/getgroups`|Current Authenticated User|User's list of groups|Get all of User's groups
+`POST /api/addchannel`|New channel|Updated User |Add new channel to current group
+`POST /api/removechannel`|Channel to be removed| Updated User|Remove channel from current group
+`POST /api/adduserchannel`|Channel and User to add|Updated User|Add User to current channel
+`POST /api/removeuserchannel`|Channel and User to remove|Updated User|Remove User from current channel
+`POST /api/getchannel`|Selected Channel string |Full Channel Object|Get channel's full data
+`POST /api/updatechannel`|New Message Object | Status | Add new message to persistent data
 
-Request: All fields required to create a user
-Response: The created user object
-Purpose: Used when a super user or GroupAdmin wishes to add a new user to the system, and they immediately are added into the current group
 
-`POST /api/removeuser`
-
-Request: Request object containing username of user to be removed
-Response: Response object, with string of removal status
-Purpose: Used when a super user or GroupAdmin wishes to remove a user from the system
-
-`POST /api/addgroup`
-
-Request: Request Object containing User Object including new group
-Response: : Response object, with string of add status
-Purpose: Used when a super user or GroupAdmin wishes to add a new group to the system
-
-`POST /api/removegroup`
-
-Request: Request object containing name of group to be removed, and the user who did it
-Response: Updated User Object Absent the removed group
-Purpose: Used when a super user or GroupAdmin wishes to remove a group from the system
-
-`POST /api/addchannel`
-
-Request: Request Object containing the group, channel to be created and the user who requested it
-Response: Updated User Object including the added group
-Purpose: Used when a relevant user wishes to add a new channel to the current group
-
-`POST /api/removechannel`
-
-Request: Request Object containing the group, channel to be removed and the user who requested it
-Response: Updated User Object absent the removed group
-Purpose:  Used when a relevant user wishes to remove a channel from the current group
-
-`POST /api/adduserchannel`
-
-Request:  Request Object containing the group, channel to add the user to and the user to add
-Response:  Updated User Object including the added channel
-Purpose: Used when a relevant user wishes to add a user to the current channel 
-
-`POST /api/removeuserchannel`
-
-Request:  Request Object containing the group, channel to remove the user from and the user to remove
-Response:  Updated User Object absent the removed channel
-Purpose: Used when a relevant user wishes to remove a user from the current channel 
-
-`/api/auth`
-
-Request: Request Object containing the username of the user to authenticate
-Response: The authenticated User Object, or in the case of the super user, an array of all users
-Purpose: Used when the user first loads into the application and wishes to gain access
 
 ## Client<->Server interactions
 Upon a request sent from the client, the server receives this request and processes, according to what route it was posted to. Since there is only one object (User), this object is then updated into the JSON located in the filesystem, and the new object is sent back to the client. The client will now update the ‘Authenticated_user’ object in the SessionStore with the new object, and, if required, refresh the local client variables to be pointing at the new values of the SessionStore, which will change the angular components if necessary.
