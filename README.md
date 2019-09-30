@@ -103,60 +103,18 @@ All data processing has been done in the backend, the frontend simply sends a re
 
 ## REST API Routes
 All server-side endpoints have a request object coming in, and a response object returned.
+|Route|Request|Response|Purpose|
+|---|---|---|---|
+|`POST /api/adduser` |All fields required to create a user|The created user object|Used when a super user or GroupAdmin wishes to add a new user to the system|
+|`POST /api/removeuser`|Request object containing user to be removed|Response object, with removal status|remove a user from the system|
+|`POST /api/addgroup`|User Object including new group|Response object, with add status| add a new group to the system|
+|`POST /api/removegroup`|Request object containing group to be removed|Updated User Object|remove a group from the system|
+|`POST /api/addchannel`|Request Object containing the new channel|Updated User Object|add a new channel to the current group|
+|`POST /api/removechannel`|Request Object containing channel to be removed| Updated User Object|remove a channel from the current group|
+|`POST /api/adduserchannel`|Request Object containing the channel and the user to add|Updated User Object|add a user to the current channel |
+|`POST /api/removeuserchannel`|Request Object containing thechannel and the user to remove|Updated User Object|remove a user from the current channel|
+|`POST /api/auth`| Request Object of user credentials|The authenticated User Object|Used when a user wishes to gain access|
 
-`POST /api/adduser`
-
-Request: All fields required to create a user
-Response: The created user object
-Purpose: Used when a super user or GroupAdmin wishes to add a new user to the system, and they immediately are added into the current group
-
-`POST /api/removeuser`
-
-Request: Request object containing username of user to be removed
-Response: Response object, with string of removal status
-Purpose: Used when a super user or GroupAdmin wishes to remove a user from the system
-
-`POST /api/addgroup`
-
-Request: Request Object containing User Object including new group
-Response: : Response object, with string of add status
-Purpose: Used when a super user or GroupAdmin wishes to add a new group to the system
-
-`POST /api/removegroup`
-
-Request: Request object containing name of group to be removed, and the user who did it
-Response: Updated User Object Absent the removed group
-Purpose: Used when a super user or GroupAdmin wishes to remove a group from the system
-
-`POST /api/addchannel`
-
-Request: Request Object containing the group, channel to be created and the user who requested it
-Response: Updated User Object including the added group
-Purpose: Used when a relevant user wishes to add a new channel to the current group
-
-`POST /api/removechannel`
-
-Request: Request Object containing the group, channel to be removed and the user who requested it
-Response: Updated User Object absent the removed group
-Purpose:  Used when a relevant user wishes to remove a channel from the current group
-
-`POST /api/adduserchannel`
-
-Request:  Request Object containing the group, channel to add the user to and the user to add
-Response:  Updated User Object including the added channel
-Purpose: Used when a relevant user wishes to add a user to the current channel 
-
-`POST /api/removeuserchannel`
-
-Request:  Request Object containing the group, channel to remove the user from and the user to remove
-Response:  Updated User Object absent the removed channel
-Purpose: Used when a relevant user wishes to remove a user from the current channel 
-
-`/api/auth`
-
-Request: Request Object containing the username of the user to authenticate
-Response: The authenticated User Object, or in the case of the super user, an array of all users
-Purpose: Used when the user first loads into the application and wishes to gain access
 
 ## Client<->Server interactions
 Upon a request sent from the client, the server receives this request and processes, according to what route it was posted to. Since there is only one object (User), this object is then updated into the JSON located in the filesystem, and the new object is sent back to the client. The client will now update the ‘Authenticated_user’ object in the SessionStore with the new object, and, if required, refresh the local client variables to be pointing at the new values of the SessionStore, which will change the angular components if necessary.
