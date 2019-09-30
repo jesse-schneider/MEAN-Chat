@@ -110,13 +110,20 @@ Route|Request|Response|Purpose
 ----|----|----|----
 `POST /api/adduser` |All fields required to create a user|The created user object|add a new user to the system
 `POST /api/removeuser`| user to be removed|Response object, with removal status|remove a user from the system
+`POST /api/auth`| Request Object of user credentials|The authenticated User Object|Used when a user wishes to gain access
+`POST /api/uploadimage`| FormData(); containing an image |Status of upload |To upload a user's image
+`POST /api/getuserimage`|User Object|Name of user's image file| To be able to serve the correct image
+`GET /api/getallusers`| NIL|Array of users|Get full list of users
 `POST /api/addgroup`|new group|Response object, with add status| add a new group to the system
 `POST /api/removegroup`|group to be removed|Updated User Object|remove a group from the system
+`POST /api/getgroups`|Current Authenticated User|User's list of groups|Get all of a user's groups
 `POST /api/addchannel`| the new channel|Updated User Object|add a new channel to the current group
 `POST /api/removechannel`|channel to be removed| Updated User Object|remove a channel from the current group
 `POST /api/adduserchannel`|the channel and the user to add|Updated User Object|add a user to the current channel
 `POST /api/removeuserchannel`|channel and the user to remove|Updated User Object|remove a user from the current channel
-`POST /api/auth`| Request Object of user credentials|The authenticated User Object|Used when a user wishes to gain access
+`POST /api/getchannel`|Selected Channel string |Full Channel Object|Get channel's full data
+`POST /api/updatechannel`|New Message Object | Status | Add new message to persistent data
+
 
 
 ## Client<->Server interactions
