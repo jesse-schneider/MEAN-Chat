@@ -1,11 +1,13 @@
 # MEANChat
 
 ## Running the Application
-Currently, to run there is a requirement of running the frontend and backend separately. 
+Currently, to run there is a requirement of running the frontend and backend separately.
 
 To run the angular project -> run `ng serve --open` from the root directory of the project.
 
 To run the node.js backend-> run `cd server | node server.js` from the root directory of the project.
+
+## Testing
 
 ## Git Structure
 The directory of the git repository follows a standard layout, with the majority of it representing a standard angular project, and the node server and API source code found in /MEANchat/server.
