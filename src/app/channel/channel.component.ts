@@ -13,9 +13,9 @@ export class ChannelComponent implements OnInit {
   assis = false;
   admin = false;
   sadmin = false;
-  @Input() channel = JSON.parse(sessionStorage.getItem('Channel'));
+  @Input() channel = "" //JSON.parse(sessionStorage.getItem('Channel'));
   @Input() channelObj = {};
-  user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
+  @Input() user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
   pictureURL = "";
   group = sessionStorage.getItem('Group');
   allUsers:any = [];
@@ -40,15 +40,13 @@ export class ChannelComponent implements OnInit {
     }
     if (this.user.username == 'super') {
       this.sadmin = !this.sadmin;
-      this.assis = !this.assis;
+       this.assis = !this.assis;
     }
 
-    if (this.user.ofGroupAsissRole == true) {
+     if (this.user.ofGroupAsissRole == true) {
       this.assis = !this.assis;
     }
-
     this.channelList = this.user.groupChannels;
-    this.channel = JSON.parse(sessionStorage.getItem('Channel'));
     this.authService.getAllUsers().subscribe((response) => {
       this.allUsers = response;
     });

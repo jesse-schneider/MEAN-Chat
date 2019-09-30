@@ -193,7 +193,7 @@ export class GroupComponent implements OnInit {
   selectChannel(i) {
     this.channel = i;
     this.messages = [];
-    sessionStorage.setItem('Channel', JSON.stringify(this.channel));
+    sessionStorage.setItem('Channel', this.channel);
     var channelPost = { channel: this.channel };
 
     this.groupService.getOneChannel(JSON.stringify(channelPost)).subscribe((response) => {
