@@ -108,19 +108,19 @@ All server-side endpoints have a request object coming in, and a response object
 
 Route|Request|Response|Purpose
 ----|----|----|----
-`POST /api/adduser` |All fields required to create a user|The created user object|add a new user to the system
-`POST /api/removeuser`| user to be removed|Response object, with removal status|remove a user from the system
-`POST /api/auth`| Request Object of user credentials|The authenticated User Object|Used when a user wishes to gain access
-`POST /api/uploadimage`| FormData(); containing an image |Status of upload |To upload a user's image
-`POST /api/getuserimage`|User Object|Name of user's image file| To be able to serve the correct image
-`GET /api/getallusers`| NIL|Array of users|Get full list of users
-`POST /api/addgroup`|new group|Response object, with add status| add a new group to the system
-`POST /api/removegroup`|group to be removed|Updated User Object|remove a group from the system
-`POST /api/getgroups`|Current Authenticated User|User's list of groups|Get all of a user's groups
-`POST /api/addchannel`| the new channel|Updated User Object|add a new channel to the current group
-`POST /api/removechannel`|channel to be removed| Updated User Object|remove a channel from the current group
-`POST /api/adduserchannel`|the channel and the user to add|Updated User Object|add a user to the current channel
-`POST /api/removeuserchannel`|channel and the user to remove|Updated User Object|remove a user from the current channel
+`POST /api/adduser` |All fields required to create a User|The created User|Add new User to the system
+`POST /api/removeuser`| User to be removed|Response with status|Remove User from the system
+`POST /api/auth`| Request of user credentials|The authenticated User|Used when a User wishes to gain access
+`POST /api/uploadimage`| FormData(); containing an image |Status of upload |Upload a User's image
+`POST /api/getuserimage`|User|Name of User's image file| To serve the correct image URL
+`GET /api/getallusers`| NIL|Array of Users|Get full list of Users
+`POST /api/addgroup`|New group|Status|Add new group to the system
+`POST /api/removegroup`|Group to be removed|Updated User|Remove a group from the system
+`POST /api/getgroups`|Current Authenticated User|User's list of groups|Get all of User's groups
+`POST /api/addchannel`|New channel|Updated User |Add new channel to current group
+`POST /api/removechannel`|Channel to be removed| Updated User|Remove channel from current group
+`POST /api/adduserchannel`|Channel and User to add|Updated User|Add User to current channel
+`POST /api/removeuserchannel`|Channel and User to remove|Updated User|Remove User from current channel
 `POST /api/getchannel`|Selected Channel string |Full Channel Object|Get channel's full data
 `POST /api/updatechannel`|New Message Object | Status | Add new message to persistent data
 
