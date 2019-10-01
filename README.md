@@ -67,8 +67,9 @@ The User object represents the majority of information about a user, including t
 
 
 ## Angular Architecture
-|Component|Purpose|
-|-----|------|
+### Components
+Component|Purpose
+-----|------
 `Nav` |The navigation bar at the top of every page
 `Login`|The login page found at root directory
 `Home`|A user’s home screen, where the login redirects following success
@@ -76,14 +77,14 @@ The User object represents the majority of information about a user, including t
 `Channel`|The child component inside group, that reflects the content of the current channel
 `Image`|The component used if a user wishes to change their profile picture
 
-Services:
-|Service|Purpose|
-|----|----|
+### Services
+Service|Purpose
+----|----
 `AuthService`|The AuthService handles all user authentication requests
 `GroupService`|The GroupService handles all group related and channel related requests
 `SocketService`|The SocketService is used for all requests related to Sockets.io
 
-### Routes:
+### Routes
 Route|Destination
 |----|----|
 `/`|The root directory
