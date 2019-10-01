@@ -1,5 +1,7 @@
 # MEANChat
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5eae32c2915e4852afe927ef64fee604)](https://www.codacy.com/manual/jesse-schneider/MEANChat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jesse-schneider/MEANChat&amp;utm_campaign=Badge_Grade)
+
 ## Running the Application
 Currently, to run there is a requirement of running the frontend and backend separately.
 
