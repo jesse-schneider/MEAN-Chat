@@ -11,8 +11,6 @@ exports.addUser = function (req, res) {
     var db = client.db("meanchat");
     var user = req.body;
     db.collection("users").insertOne(user, function (err, result) {
-      console.log("Created user:");
-      console.log(user);
       res.send(user);
       client.close();
     });

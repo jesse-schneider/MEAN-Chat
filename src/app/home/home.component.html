@@ -7,15 +7,6 @@
   <button type="button" (click)="create();showCreateGroup()" id="submitbutton" class="btn btn-dark btn-lg">Save</button>
 </form>
 </div>
-<div class="newGroupForm">
-  <form *ngIf="removeGroup" id="createGroup">
-    <label for="removeGroup" class="lbl">Group to Remove: </label>
-    <input type="removeGroup" [(ngModel)]="groupToRemove" name="removeGroup" id="removeGroup" autofocus />
-    <button type="button" (click)="remove();showRemoveGroup()" id="submitbutton"
-      class="btn btn-dark btn-lg">Save</button>
-  </form>
-</div>
-
 <h3 class="welcome">Groups</h3>
 <div *ngIf="loggedIn">
 <ul *ngFor="let i of user.groupList" class="grouplist list-group-item">
@@ -23,6 +14,6 @@
       <a href="group" (click)="selectGroup(i)"><i class="fas fa-server icon"></i>
       <li>{{ i }}</li></a>
     </div>
-    <button *ngIf="admin" (click)="remove(i)" class="btn btn-danger removeButton">Remove</button>
+    <button *ngIf="admin" (click)="remove(i)" class="btn btn-danger removeButton" id="removebutton">Remove</button>
 </ul>
 </div>

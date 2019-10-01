@@ -2,9 +2,9 @@
 <h5 class="welcome">Group: {{ group }}</h5>
 <a href="home"><i class="fas fa-arrow-left backarrow"></i><p class="backarrow">Back to Groups</p>
 </a>
-<button *ngIf="assis" (click)="showCreateChannel()" class="btn btn-primary" id="submitbutton">Create new Channel</button>
+<button *ngIf="assis" (click)="showCreateChannel()" class="btn btn-primary createC" id="submitbutton">Create new Channel</button>
 <button *ngIf="admin" (click)="showCreateUser()" class="btn btn-primary userbtn" id="middleButton">Add User +</button>
-<button *ngIf="assis" (click)="showRemoveChannel()" class="btn btn-danger userbtn" id="middleButton">Remove Channel</button>
+<button *ngIf="assis" (click)="showRemoveChannel()" class="btn btn-danger userbtn removeC" id="middleButton">Remove Channel</button>
 <button *ngIf="sadmin" (click)="showRemoveUser()" class="btn btn-danger userbtn" id="endButton">Remove User -</button>
 <div class="newChannelForm">
   <form *ngIf="createChannel" id="createChannel">
@@ -35,7 +35,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let channel of channelList">
+          <tr *ngFor="let channel of channelList" class="channelTable">
             <th scope="row" class="tabletext">{{channel}}</th>
             <td>
               <button type="button" (click)="removeC(channel);showRemoveChannel()" class="btn btn-primary btn-sm">Remove</button>
@@ -77,7 +77,7 @@
     </nav>
     <main role="main" class="col-lg-10">
       <div id="main" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"></div>
-      <app-channel id="channelElement" [user]="user" [channel]="channel" [messages]="messages" [channelObj]="channelObj"></app-channel>
+      <app-channel id="channelElement" [allUsers]="allUsers" [user]="user" [channel]="channel" [messages]="messages" [channelObj]="channelObj"></app-channel>
     </main>
   </div>
   </div>

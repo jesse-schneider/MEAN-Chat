@@ -63,6 +63,7 @@ exports.getChannel = function (req, res) {
   MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     var db = client.db("meanchat");
     let channelObj = req.body.channel;
+    console.log(channelObj);
     let str = channelObj.split('-');
     let groupChannel = str[1];
     let group = str[0];

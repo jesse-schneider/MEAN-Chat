@@ -71,19 +71,22 @@ export class GroupComponent implements OnInit {
         this.channelList.push(this.user.groupChannels[i]);
       }
     }
+    if (this.allUsers.length < 1) {
+      this.authService.getAllUsers().subscribe((response) => {
+        this.allUsers = response;
+      });
+    }
 
-    this.authService.getAllUsers().subscribe((response) => {
-      this.allUsers = response;
-    });
+    if(this.channelList.length > 1) {
+      this.channel = this.channelList[0];
+      sessionStorage.setItem('Channel', JSON.stringify(this.channel));
 
-    this.channel = this.channelList[0];
-    sessionStorage.setItem('Channel', JSON.stringify(this.channel));
-
-    var channelPost = { channel: this.channel };
-    this.groupService.getOneChannel(JSON.stringify(channelPost)).subscribe((response) => {
-      this.channelObj = response;
-      sessionStorage.setItem('ChannelObj', JSON.stringify(this.channelObj));
-    });
+      var channelPost = { channel: this.channel };
+      this.groupService.getOneChannel(JSON.stringify(channelPost)).subscribe((response) => {
+        this.channelObj = response;
+        sessionStorage.setItem('ChannelObj', JSON.stringify(this.channelObj));
+      });
+    }
     this.initIoConnection();
   }
 
@@ -215,7 +218,6 @@ export class GroupComponent implements OnInit {
     };
 
     let data = JSON.stringify(post);
-
     //send request containing new channel to be created in current group
     this.groupService.createChannel(data).subscribe((response) => {
       console.log('response: ', response);

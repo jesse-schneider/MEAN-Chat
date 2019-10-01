@@ -27,10 +27,9 @@ export class LoginComponent implements OnInit {
     }
 
     let data = JSON.stringify(user);
-    
+
     //auth service sends request to node.js api
     this.authService.login(data).subscribe((response) => {
-      console.log('response from the post is ', response);
       //if null, no user found
       if(response[0] == null) {
         return alert("Please check you credentials and try again.");

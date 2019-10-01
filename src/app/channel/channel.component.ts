@@ -13,17 +13,19 @@ export class ChannelComponent implements OnInit {
   assis = false;
   admin = false;
   sadmin = false;
-  @Input() channel = "" //JSON.parse(sessionStorage.getItem('Channel'));
+
+  @Input() channel = "";
   @Input() channelObj = {};
   @Input() user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
+  @Input() allUsers: any = [];
+  @Input() messages = [];
+
   pictureURL = "";
   group = sessionStorage.getItem('Group');
-  allUsers:any = [];
   channelList = [];
 
-  messageContent="";
-  @Input() messages = [];
   ioConnection: any;
+  messageContent="";
   imgMessage:any = "";
   ISent = false;
   
@@ -47,15 +49,14 @@ export class ChannelComponent implements OnInit {
       this.assis = !this.assis;
     }
     this.channelList = this.user.groupChannels;
-    this.authService.getAllUsers().subscribe((response) => {
-      this.allUsers = response;
-    });
 
-    var post = { user: this.user._id };
-    let data = JSON.stringify(post);
-    this.authService.getImage(data).subscribe((response) => {
-      this.pictureURL = response["picture"];
-    });
+    if(this.user) {
+      var post = { user: this.user._id };
+      let data = JSON.stringify(post);
+      this.authService.getImage(data).subscribe((response) => {
+        this.pictureURL = response["picture"];
+      });
+    } 
     this.initIoConnection();
   }
 
