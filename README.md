@@ -98,13 +98,13 @@ The general backend is run by the `server.js` file located in the /server folder
 ```
 MEANchat/Server
 		\server.js
-			/routes
-			  \channelDB.js
-			  \groupDB.js
-			  \userDB.js
-			  \users-channels.js
+			  /routes
+			    \channelDB.js
+			    \groupDB.js
+			    \userDB.js
+			    \users-channels.js
 			/testing
-        \test.js
+       \test.js
  ```
 		
 ### Functions:
