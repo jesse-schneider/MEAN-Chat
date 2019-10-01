@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../services/auth.service';
 import { GroupService } from './../services/group.service';
+import { SocketService } from './../services/socket.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-group',
@@ -13,10 +15,8 @@ export class GroupComponent implements OnInit {
   group = sessionStorage.getItem('Group');
   channel = "";
   channelList = [];
-  userList = [];
+  allUsers:any = [];
   newChannel = "";
-  channelToRemove = "";
-  userToRemove = "";
   createChannel = false;
   removeChannel = false;
   removeUser = false;
@@ -24,33 +24,42 @@ export class GroupComponent implements OnInit {
   admin = false;
   sadmin = false;
   assis = false;
-  activeCss = [];
-  currentCss = "";
-  
+  channelObj = {};
 
   uusername = "";
   uemail = "";
+  upassword: "";
   ugroupAdmin = false;
   ugroupAssis = false;
   ugroupList = [];
   ugroupChannels = [];
   uadminGroupList = [];
+  loggedIn = false;
 
-  constructor(private authService: AuthService, private groupService: GroupService) { }
+  messages = [];
+
+  constructor(private authService: AuthService, private groupService: GroupService, private socketService: SocketService, private router: Router) { }
+
+  
 
   ngOnInit() {
-    let storageJson = sessionStorage.getItem('Users');
-    this.userList = JSON.parse(storageJson);
 
-    if (this.user.ofGroupAdminRole == true) {
+    //on init, check for logged in user, and if found, check if they are an admin
+    if (sessionStorage.getItem('Authenticated_user') == null) {
+      return this.router.navigateByUrl('');
+    } else {
+      this.loggedIn = true;
+    }
+    //on init, check user roles, and grab user's channels to put into channels list array
+    if (this.user.ofGroupAdminRole === true) {
       this.admin = !this.admin;
     }
-    if(this.user.username== 'super') {
+    if(this.user.username === 'super') {
       this.sadmin = !this.sadmin;
       this.assis = !this.assis;
     }
 
-    if(this.user.ofGroupAsissRole == true) {
+    if(this.user.ofGroupAsissRole === true) {
       this.assis = !this.assis;
     }
 
@@ -62,9 +71,27 @@ export class GroupComponent implements OnInit {
         this.channelList.push(this.user.groupChannels[i]);
       }
     }
+    if (this.allUsers.length < 1) {
+      this.authService.getAllUsers().subscribe((response) => {
+        this.allUsers = response;
+      });
+    }
+
+    if(this.channelList.length > 1) {
+      this.channel = this.channelList[0];
+      sessionStorage.setItem('Channel', JSON.stringify(this.channel));
+
+      var channelPost = { channel: this.channel };
+      this.groupService.getOneChannel(JSON.stringify(channelPost)).subscribe((response) => {
+        this.channelObj = response;
+        sessionStorage.setItem('ChannelObj', JSON.stringify(this.channelObj));
+      });
+    }
+    this.initIoConnection();
   }
 
   showCreateChannel() {
+    //visiblity of the create channel elements
     this.createChannel = !this.createChannel;
     if(this.createUser == true) {
       this.createUser = false;
@@ -76,6 +103,7 @@ export class GroupComponent implements OnInit {
   }
 
   showRemoveChannel() {
+    //visiblity of the remove channel elements
     this.removeChannel = !this.removeChannel;
     if (this.createUser == true) {
       this.createUser = false;
@@ -87,6 +115,7 @@ export class GroupComponent implements OnInit {
   }
 
   showCreateUser() {
+    //visiblity of the create user elements
     this.createUser = !this.createUser;
     if (this.createChannel == true) {
       this.createChannel = false;
@@ -98,6 +127,7 @@ export class GroupComponent implements OnInit {
   }
 
   showRemoveUser() {
+    //visiblity of the remove user elements
     this.removeUser = !this.removeUser;
     if (this.createUser == true) {
       this.createUser = false;
@@ -109,23 +139,27 @@ export class GroupComponent implements OnInit {
   }
 
   addU() {
+    //new user object
     let user = {
       username: this.uusername,
       email: this.uemail,
+      password: this.upassword,
       groupAdmin: this.ugroupAdmin,
       groupAssis: this.ugroupAssis,
       groupList: this.ugroupList,
       adminGroupList: this.uadminGroupList,
-      groupChannels: this.ugroupChannels
+      groupChannels: this.ugroupChannels,
+      profilePicLocation: "img\default-avatar.jpg"
     }
     user.groupList.push(this.group);
 
     let data = JSON.stringify(user);
 
+    //send request to api to add a new user, and have them automatically added to this current group
     this.authService.createUser(data).subscribe((response) => {
       console.log('response: ', response);
-      this.userList.push(response);
-      sessionStorage.setItem('Users', JSON.stringify(this.userList));
+      this.allUsers.push(response);
+      sessionStorage.setItem('Users', JSON.stringify(this.allUsers));
       this.resetFields();
       this.showCreateUser();
     }, (error) => {
@@ -133,11 +167,24 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  removeU() {
-    console.log(this.userToRemove);
-    this.authService.removeUser(JSON.parse("{\"remove\": \"" + this.userToRemove + "\", \"user\": \"" + this.user.username + "\" }")).subscribe((response) => {
+  removeU(i) {
+    //create post object
+    let post = {
+      user: i
+    };
+    let data = JSON.stringify(post);
+
+    //send user id to be deleted
+    this.authService.removeUser(data).subscribe((response) => {
       console.log(response);
+      //get updated user list back and update local session storage
+      this.authService.getAllUsers().subscribe((response) => {
+        this.allUsers = response;
+        sessionStorage.setItem('Users', JSON.stringify(this.allUsers));
+        console.log(this.allUsers);
+      });
     });
+    this.showRemoveUser();
   }
 
   resetFields() {
@@ -148,20 +195,30 @@ export class GroupComponent implements OnInit {
 
   selectChannel(i) {
     this.channel = i;
-    sessionStorage.setItem('Channel', JSON.stringify(this.channel));
+    this.messages = [];
+    sessionStorage.setItem('Channel', this.channel);
+    var channelPost = { channel: this.channel };
 
+    this.groupService.getOneChannel(JSON.stringify(channelPost)).subscribe((response) => {
+      this.channelObj = response;
+      sessionStorage.setItem('ChannelObj', JSON.stringify(this.channelObj));
+
+        this.messages = this.channelObj["messages"];
+        this.socketService.joinChannel({ user: this.user.username, channel: this.channel });
+    });
   }
 
   createC() {
-    let groupObj = {
+    //create post object
+    let post = {
       group: this.group,
       channel: this.newChannel,
-      user: this.user.username
+      user: this.user._id,
+      messages: []
     };
-    this.newChannel = "";
 
-    let data = JSON.stringify(groupObj);
-
+    let data = JSON.stringify(post);
+    //send request containing new channel to be created in current group
     this.groupService.createChannel(data).subscribe((response) => {
       console.log('response: ', response);
       sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
@@ -178,10 +235,21 @@ export class GroupComponent implements OnInit {
     }, (error) => {
       console.log('error: ', error);
     });
+    this.newChannel = "";
   }
   
-  removeC() {
-    this.groupService.removeChannel(JSON.parse("{\"channel\": \"" + this.channelToRemove + "\", \"user\": \"" + this.user.username + "\" }")).subscribe((response) => {
+  removeC(i) {
+    //create post object
+    let post = {
+      group: this.group,
+      channel: i,
+      user: this.user._id
+    };
+
+      let data = JSON.stringify(post);
+
+    //send request with group service to remove channel from current group
+    this.groupService.removeChannel(data).subscribe((response) => {
       console.log('response: ', response);
       sessionStorage.setItem('Authenticated_user', JSON.stringify(response));
       this.user = JSON.parse(sessionStorage.getItem('Authenticated_user'));
@@ -197,6 +265,10 @@ export class GroupComponent implements OnInit {
     }, (error) => {
       console.log('error: ', error);
     });
+  }
+
+  initIoConnection() {
+    this.socketService.initSocket();
   }
   
 }

@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./routes/testing/test.js",
     "start": "node server.js"
   },
   "author": "",
@@ -13,6 +13,13 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mongodb": "^3.3.2",
+    "multer": "^1.4.2",
     "nodemon": "^1.19.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.1"
   }
 }

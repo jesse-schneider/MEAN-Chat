@@ -17,6 +17,10 @@ export class GroupService {
     return this.http.post('http://localhost:3000/api/removegroup', data, httpOptions);
   }
 
+  getAllGroups(data) {
+    return this.http.post('http://localhost:3000/api/getgroups', data, httpOptions);
+  }
+
   createChannel(data) {
     return this.http.post('http://localhost:3000/api/addchannel', data, httpOptions);
   }
@@ -24,9 +28,16 @@ export class GroupService {
   getChannels(data) {
     return this.http.post('http://localhost:3000/api/channel', data, httpOptions);
   }
+  getOneChannel(data) {
+    return this.http.post('http://localhost:3000/api/getchannel', data, httpOptions);
+  }
 
   removeChannel(data) {
     return this.http.post('http://localhost:3000/api/removechannel', data, httpOptions);
+  }
+
+  updateChannel(data) {
+    return this.http.post('http://localhost:3000/api/updatechannel', data, httpOptions);
   }
 
   addUtoChannel(data) {

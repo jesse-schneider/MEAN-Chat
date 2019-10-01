@@ -1,7 +1,9 @@
-<h2 style="text-align: center">Login to MEANchat!</h2>
+<h1 style="text-align: center">Login to MEANChat!</h1>
 <div id="loginpage">
   <form id="loginform">
     <label for="username" class="lbl">Username</label>
-    <input type="username" [(ngModel)]="username" name="username" id="username" />
+    <input type="username" [(ngModel)]="username" name="username" id="username" required/>
+    <label for="password" class="lbl">Password</label>
+    <input type="password" [(ngModel)]="password" name="password" id="password" required/>
     <button (click)="login()" id="submitbutton" class="btn btn-dark btn-lg">Login</button>
   </form>
