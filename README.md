@@ -104,7 +104,7 @@ MEANchat/Server
 			    \userDB.js
 			    \users-channels.js
 			/testing
-       \test.js
+          \test.js
  ```
 		
 ### Functions:
